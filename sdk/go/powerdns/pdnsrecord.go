@@ -7,6 +7,7 @@ import (
 	"context"
 	"reflect"
 
+	"github.com/pkg/errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -26,9 +27,24 @@ type PDNSRecord struct {
 func NewPDNSRecord(ctx *pulumi.Context,
 	name string, args *PDNSRecordArgs, opts ...pulumi.ResourceOption) (*PDNSRecord, error) {
 	if args == nil {
-		args = &PDNSRecordArgs{}
+		return nil, errors.New("missing one or more required arguments")
 	}
 
+	if args.Name == nil {
+		return nil, errors.New("invalid value for required argument 'Name'")
+	}
+	if args.Records == nil {
+		return nil, errors.New("invalid value for required argument 'Records'")
+	}
+	if args.Ttl == nil {
+		return nil, errors.New("invalid value for required argument 'Ttl'")
+	}
+	if args.Type == nil {
+		return nil, errors.New("invalid value for required argument 'Type'")
+	}
+	if args.Zone == nil {
+		return nil, errors.New("invalid value for required argument 'Zone'")
+	}
 	var resource PDNSRecord
 	err := ctx.RegisterResource("powerdns:index:PDNSRecord", name, args, &resource, opts...)
 	if err != nil {
@@ -61,10 +77,24 @@ func (PDNSRecordState) ElementType() reflect.Type {
 }
 
 type pdnsrecordArgs struct {
+	Name    string   `pulumi:"name"`
+	Records []string `pulumi:"records"`
+	// For A and AAAA records, if true, create corresponding PTR.
+	Set_ptr *bool  `pulumi:"set_ptr"`
+	Ttl     int    `pulumi:"ttl"`
+	Type    string `pulumi:"type"`
+	Zone    string `pulumi:"zone"`
 }
 
 // The set of arguments for constructing a PDNSRecord resource.
 type PDNSRecordArgs struct {
+	Name    pulumi.StringInput
+	Records pulumi.StringArrayInput
+	// For A and AAAA records, if true, create corresponding PTR.
+	Set_ptr pulumi.BoolPtrInput
+	Ttl     pulumi.IntInput
+	Type    pulumi.StringInput
+	Zone    pulumi.StringInput
 }
 
 func (PDNSRecordArgs) ElementType() reflect.Type {

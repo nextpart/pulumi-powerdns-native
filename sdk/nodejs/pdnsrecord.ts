@@ -31,15 +31,15 @@ export class PDNSRecord extends pulumi.CustomResource {
         return obj['__pulumiType'] === PDNSRecord.__pulumiType;
     }
 
-    public /*out*/ readonly name!: pulumi.Output<string>;
-    public /*out*/ readonly records!: pulumi.Output<string[]>;
+    public readonly name!: pulumi.Output<string>;
+    public readonly records!: pulumi.Output<string[]>;
     /**
      * For A and AAAA records, if true, create corresponding PTR.
      */
-    public /*out*/ readonly set_ptr!: pulumi.Output<boolean | undefined>;
-    public /*out*/ readonly ttl!: pulumi.Output<number>;
-    public /*out*/ readonly type!: pulumi.Output<string>;
-    public /*out*/ readonly zone!: pulumi.Output<string>;
+    public readonly set_ptr!: pulumi.Output<boolean | undefined>;
+    public readonly ttl!: pulumi.Output<number>;
+    public readonly type!: pulumi.Output<string>;
+    public readonly zone!: pulumi.Output<string>;
 
     /**
      * Create a PDNSRecord resource with the given unique name, arguments, and options.
@@ -48,16 +48,31 @@ export class PDNSRecord extends pulumi.CustomResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args?: PDNSRecordArgs, opts?: pulumi.CustomResourceOptions) {
+    constructor(name: string, args: PDNSRecordArgs, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
-            resourceInputs["name"] = undefined /*out*/;
-            resourceInputs["records"] = undefined /*out*/;
-            resourceInputs["set_ptr"] = undefined /*out*/;
-            resourceInputs["ttl"] = undefined /*out*/;
-            resourceInputs["type"] = undefined /*out*/;
-            resourceInputs["zone"] = undefined /*out*/;
+            if ((!args || args.name === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'name'");
+            }
+            if ((!args || args.records === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'records'");
+            }
+            if ((!args || args.ttl === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'ttl'");
+            }
+            if ((!args || args.type === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'type'");
+            }
+            if ((!args || args.zone === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'zone'");
+            }
+            resourceInputs["name"] = args ? args.name : undefined;
+            resourceInputs["records"] = args ? args.records : undefined;
+            resourceInputs["set_ptr"] = args ? args.set_ptr : undefined;
+            resourceInputs["ttl"] = args ? args.ttl : undefined;
+            resourceInputs["type"] = args ? args.type : undefined;
+            resourceInputs["zone"] = args ? args.zone : undefined;
         } else {
             resourceInputs["name"] = undefined /*out*/;
             resourceInputs["records"] = undefined /*out*/;
@@ -75,4 +90,13 @@ export class PDNSRecord extends pulumi.CustomResource {
  * The set of arguments for constructing a PDNSRecord resource.
  */
 export interface PDNSRecordArgs {
+    name: pulumi.Input<string>;
+    records: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * For A and AAAA records, if true, create corresponding PTR.
+     */
+    set_ptr?: pulumi.Input<boolean>;
+    ttl: pulumi.Input<number>;
+    type: pulumi.Input<string>;
+    zone: pulumi.Input<string>;
 }

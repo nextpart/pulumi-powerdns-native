@@ -41,7 +41,7 @@ namespace Pulumi.Powerdns
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public PDNSRecord(string name, PDNSRecordArgs? args = null, CustomResourceOptions? options = null)
+        public PDNSRecord(string name, PDNSRecordArgs args, CustomResourceOptions? options = null)
             : base("powerdns:index:PDNSRecord", name, args ?? new PDNSRecordArgs(), MakeResourceOptions(options, ""))
         {
         }
@@ -78,6 +78,32 @@ namespace Pulumi.Powerdns
 
     public sealed class PDNSRecordArgs : Pulumi.ResourceArgs
     {
+        [Input("name", required: true)]
+        public Input<string> Name { get; set; } = null!;
+
+        [Input("records", required: true)]
+        private InputList<string>? _records;
+        public InputList<string> Records
+        {
+            get => _records ?? (_records = new InputList<string>());
+            set => _records = value;
+        }
+
+        /// <summary>
+        /// For A and AAAA records, if true, create corresponding PTR.
+        /// </summary>
+        [Input("set_ptr")]
+        public Input<bool>? Set_ptr { get; set; }
+
+        [Input("ttl", required: true)]
+        public Input<int> Ttl { get; set; } = null!;
+
+        [Input("type", required: true)]
+        public Input<string> Type { get; set; } = null!;
+
+        [Input("zone", required: true)]
+        public Input<string> Zone { get; set; } = null!;
+
         public PDNSRecordArgs()
         {
         }

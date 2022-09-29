@@ -55,6 +55,37 @@
                 "type",
                 "ttl",
                 "records"
+            ],
+            "inputProperties": {
+                "zone":{
+                    "type": "string"
+                },
+                "name":{
+                    "type": "string"
+                },
+                "type":{
+                    "type": "string"
+                },
+                "ttl":{
+                    "type": "integer"
+                },
+                "records":{
+                    "type": "array",
+                    "items":{
+                        "type": "string"
+                    }
+                },
+                "set_ptr":{
+                    "type": "boolean",
+                    "description": "For A and AAAA records, if true, create corresponding PTR."
+                }
+            },
+            "requiredInputs": [
+                "zone",
+                "name",
+                "type",
+                "ttl",
+                "records"
             ]
         },
         "powerdns:index:PDNSZone": {
@@ -86,6 +117,37 @@
                 }
             },
             "required": [
+                "name",
+                "kind"
+            ],
+            "inputProperties": {
+                "name":{
+                    "type": "string"
+                },
+                "kind":{
+                    "type": "string"
+                },
+                "account":{
+                    "type": "string",
+                    "default": "admin"
+                },
+                "nameservers":{
+                    "type": "array",
+                    "items":{
+                        "type": "string"
+                    }
+                },
+                "masters":{
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "soa_edit_api":{
+                    "type": "string"
+                }
+            },
+            "requiredInputs": [
                 "name",
                 "kind"
             ]

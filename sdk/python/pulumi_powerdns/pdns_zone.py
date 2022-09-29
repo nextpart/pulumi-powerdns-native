@@ -13,11 +13,82 @@ __all__ = ['PDNSZoneArgs', 'PDNSZone']
 
 @pulumi.input_type
 class PDNSZoneArgs:
-    def __init__(__self__):
+    def __init__(__self__, *,
+                 kind: pulumi.Input[str],
+                 name: pulumi.Input[str],
+                 account: Optional[pulumi.Input[str]] = None,
+                 masters: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 nameservers: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 soa_edit_api: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a PDNSZone resource.
         """
-        pass
+        pulumi.set(__self__, "kind", kind)
+        pulumi.set(__self__, "name", name)
+        if account is None:
+            account = 'admin'
+        if account is not None:
+            pulumi.set(__self__, "account", account)
+        if masters is not None:
+            pulumi.set(__self__, "masters", masters)
+        if nameservers is not None:
+            pulumi.set(__self__, "nameservers", nameservers)
+        if soa_edit_api is not None:
+            pulumi.set(__self__, "soa_edit_api", soa_edit_api)
+
+    @property
+    @pulumi.getter
+    def kind(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "kind")
+
+    @kind.setter
+    def kind(self, value: pulumi.Input[str]):
+        pulumi.set(self, "kind", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def account(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "account")
+
+    @account.setter
+    def account(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "account", value)
+
+    @property
+    @pulumi.getter
+    def masters(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        return pulumi.get(self, "masters")
+
+    @masters.setter
+    def masters(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "masters", value)
+
+    @property
+    @pulumi.getter
+    def nameservers(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        return pulumi.get(self, "nameservers")
+
+    @nameservers.setter
+    def nameservers(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "nameservers", value)
+
+    @property
+    @pulumi.getter
+    def soa_edit_api(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "soa_edit_api")
+
+    @soa_edit_api.setter
+    def soa_edit_api(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "soa_edit_api", value)
 
 
 class PDNSZone(pulumi.CustomResource):
@@ -25,6 +96,12 @@ class PDNSZone(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 account: Optional[pulumi.Input[str]] = None,
+                 kind: Optional[pulumi.Input[str]] = None,
+                 masters: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 name: Optional[pulumi.Input[str]] = None,
+                 nameservers: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 soa_edit_api: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
         Create a PDNSZone resource with the given unique name, props, and options.
@@ -35,7 +112,7 @@ class PDNSZone(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: Optional[PDNSZoneArgs] = None,
+                 args: PDNSZoneArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create a PDNSZone resource with the given unique name, props, and options.
@@ -54,6 +131,12 @@ class PDNSZone(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 account: Optional[pulumi.Input[str]] = None,
+                 kind: Optional[pulumi.Input[str]] = None,
+                 masters: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 name: Optional[pulumi.Input[str]] = None,
+                 nameservers: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 soa_edit_api: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         if opts is None:
             opts = pulumi.ResourceOptions()
@@ -68,12 +151,18 @@ class PDNSZone(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = PDNSZoneArgs.__new__(PDNSZoneArgs)
 
-            __props__.__dict__["account"] = None
-            __props__.__dict__["kind"] = None
-            __props__.__dict__["masters"] = None
-            __props__.__dict__["name"] = None
-            __props__.__dict__["nameservers"] = None
-            __props__.__dict__["soa_edit_api"] = None
+            if account is None:
+                account = 'admin'
+            __props__.__dict__["account"] = account
+            if kind is None and not opts.urn:
+                raise TypeError("Missing required property 'kind'")
+            __props__.__dict__["kind"] = kind
+            __props__.__dict__["masters"] = masters
+            if name is None and not opts.urn:
+                raise TypeError("Missing required property 'name'")
+            __props__.__dict__["name"] = name
+            __props__.__dict__["nameservers"] = nameservers
+            __props__.__dict__["soa_edit_api"] = soa_edit_api
         super(PDNSZone, __self__).__init__(
             'powerdns:index:PDNSZone',
             resource_name,

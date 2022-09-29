@@ -31,12 +31,12 @@ export class PDNSZone extends pulumi.CustomResource {
         return obj['__pulumiType'] === PDNSZone.__pulumiType;
     }
 
-    public /*out*/ readonly account!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly kind!: pulumi.Output<string>;
-    public /*out*/ readonly masters!: pulumi.Output<string[] | undefined>;
-    public /*out*/ readonly name!: pulumi.Output<string>;
-    public /*out*/ readonly nameservers!: pulumi.Output<string[] | undefined>;
-    public /*out*/ readonly soa_edit_api!: pulumi.Output<string | undefined>;
+    public readonly account!: pulumi.Output<string | undefined>;
+    public readonly kind!: pulumi.Output<string>;
+    public readonly masters!: pulumi.Output<string[] | undefined>;
+    public readonly name!: pulumi.Output<string>;
+    public readonly nameservers!: pulumi.Output<string[] | undefined>;
+    public readonly soa_edit_api!: pulumi.Output<string | undefined>;
 
     /**
      * Create a PDNSZone resource with the given unique name, arguments, and options.
@@ -45,16 +45,22 @@ export class PDNSZone extends pulumi.CustomResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args?: PDNSZoneArgs, opts?: pulumi.CustomResourceOptions) {
+    constructor(name: string, args: PDNSZoneArgs, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
-            resourceInputs["account"] = undefined /*out*/;
-            resourceInputs["kind"] = undefined /*out*/;
-            resourceInputs["masters"] = undefined /*out*/;
-            resourceInputs["name"] = undefined /*out*/;
-            resourceInputs["nameservers"] = undefined /*out*/;
-            resourceInputs["soa_edit_api"] = undefined /*out*/;
+            if ((!args || args.kind === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'kind'");
+            }
+            if ((!args || args.name === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'name'");
+            }
+            resourceInputs["account"] = (args ? args.account : undefined) ?? "admin";
+            resourceInputs["kind"] = args ? args.kind : undefined;
+            resourceInputs["masters"] = args ? args.masters : undefined;
+            resourceInputs["name"] = args ? args.name : undefined;
+            resourceInputs["nameservers"] = args ? args.nameservers : undefined;
+            resourceInputs["soa_edit_api"] = args ? args.soa_edit_api : undefined;
         } else {
             resourceInputs["account"] = undefined /*out*/;
             resourceInputs["kind"] = undefined /*out*/;
@@ -72,4 +78,10 @@ export class PDNSZone extends pulumi.CustomResource {
  * The set of arguments for constructing a PDNSZone resource.
  */
 export interface PDNSZoneArgs {
+    account?: pulumi.Input<string>;
+    kind: pulumi.Input<string>;
+    masters?: pulumi.Input<pulumi.Input<string>[]>;
+    name: pulumi.Input<string>;
+    nameservers?: pulumi.Input<pulumi.Input<string>[]>;
+    soa_edit_api?: pulumi.Input<string>;
 }

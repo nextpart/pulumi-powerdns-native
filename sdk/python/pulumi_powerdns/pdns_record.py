@@ -13,11 +13,81 @@ __all__ = ['PDNSRecordArgs', 'PDNSRecord']
 
 @pulumi.input_type
 class PDNSRecordArgs:
-    def __init__(__self__):
+    def __init__(__self__, *,
+                 name: pulumi.Input[str],
+                 records: pulumi.Input[Sequence[pulumi.Input[str]]],
+                 ttl: pulumi.Input[int],
+                 type: pulumi.Input[str],
+                 zone: pulumi.Input[str],
+                 set_ptr: Optional[pulumi.Input[bool]] = None):
         """
         The set of arguments for constructing a PDNSRecord resource.
+        :param pulumi.Input[bool] set_ptr: For A and AAAA records, if true, create corresponding PTR.
         """
-        pass
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "records", records)
+        pulumi.set(__self__, "ttl", ttl)
+        pulumi.set(__self__, "type", type)
+        pulumi.set(__self__, "zone", zone)
+        if set_ptr is not None:
+            pulumi.set(__self__, "set_ptr", set_ptr)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def records(self) -> pulumi.Input[Sequence[pulumi.Input[str]]]:
+        return pulumi.get(self, "records")
+
+    @records.setter
+    def records(self, value: pulumi.Input[Sequence[pulumi.Input[str]]]):
+        pulumi.set(self, "records", value)
+
+    @property
+    @pulumi.getter
+    def ttl(self) -> pulumi.Input[int]:
+        return pulumi.get(self, "ttl")
+
+    @ttl.setter
+    def ttl(self, value: pulumi.Input[int]):
+        pulumi.set(self, "ttl", value)
+
+    @property
+    @pulumi.getter
+    def type(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: pulumi.Input[str]):
+        pulumi.set(self, "type", value)
+
+    @property
+    @pulumi.getter
+    def zone(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "zone")
+
+    @zone.setter
+    def zone(self, value: pulumi.Input[str]):
+        pulumi.set(self, "zone", value)
+
+    @property
+    @pulumi.getter
+    def set_ptr(self) -> Optional[pulumi.Input[bool]]:
+        """
+        For A and AAAA records, if true, create corresponding PTR.
+        """
+        return pulumi.get(self, "set_ptr")
+
+    @set_ptr.setter
+    def set_ptr(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "set_ptr", value)
 
 
 class PDNSRecord(pulumi.CustomResource):
@@ -25,17 +95,24 @@ class PDNSRecord(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 name: Optional[pulumi.Input[str]] = None,
+                 records: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 set_ptr: Optional[pulumi.Input[bool]] = None,
+                 ttl: Optional[pulumi.Input[int]] = None,
+                 type: Optional[pulumi.Input[str]] = None,
+                 zone: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
         Create a PDNSRecord resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[bool] set_ptr: For A and AAAA records, if true, create corresponding PTR.
         """
         ...
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: Optional[PDNSRecordArgs] = None,
+                 args: PDNSRecordArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create a PDNSRecord resource with the given unique name, props, and options.
@@ -54,6 +131,12 @@ class PDNSRecord(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 name: Optional[pulumi.Input[str]] = None,
+                 records: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 set_ptr: Optional[pulumi.Input[bool]] = None,
+                 ttl: Optional[pulumi.Input[int]] = None,
+                 type: Optional[pulumi.Input[str]] = None,
+                 zone: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         if opts is None:
             opts = pulumi.ResourceOptions()
@@ -68,12 +151,22 @@ class PDNSRecord(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = PDNSRecordArgs.__new__(PDNSRecordArgs)
 
-            __props__.__dict__["name"] = None
-            __props__.__dict__["records"] = None
-            __props__.__dict__["set_ptr"] = None
-            __props__.__dict__["ttl"] = None
-            __props__.__dict__["type"] = None
-            __props__.__dict__["zone"] = None
+            if name is None and not opts.urn:
+                raise TypeError("Missing required property 'name'")
+            __props__.__dict__["name"] = name
+            if records is None and not opts.urn:
+                raise TypeError("Missing required property 'records'")
+            __props__.__dict__["records"] = records
+            __props__.__dict__["set_ptr"] = set_ptr
+            if ttl is None and not opts.urn:
+                raise TypeError("Missing required property 'ttl'")
+            __props__.__dict__["ttl"] = ttl
+            if type is None and not opts.urn:
+                raise TypeError("Missing required property 'type'")
+            __props__.__dict__["type"] = type
+            if zone is None and not opts.urn:
+                raise TypeError("Missing required property 'zone'")
+            __props__.__dict__["zone"] = zone
         super(PDNSRecord, __self__).__init__(
             'powerdns:index:PDNSRecord',
             resource_name,

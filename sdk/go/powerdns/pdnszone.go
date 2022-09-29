@@ -7,6 +7,7 @@ import (
 	"context"
 	"reflect"
 
+	"github.com/pkg/errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -25,9 +26,18 @@ type PDNSZone struct {
 func NewPDNSZone(ctx *pulumi.Context,
 	name string, args *PDNSZoneArgs, opts ...pulumi.ResourceOption) (*PDNSZone, error) {
 	if args == nil {
-		args = &PDNSZoneArgs{}
+		return nil, errors.New("missing one or more required arguments")
 	}
 
+	if args.Kind == nil {
+		return nil, errors.New("invalid value for required argument 'Kind'")
+	}
+	if args.Name == nil {
+		return nil, errors.New("invalid value for required argument 'Name'")
+	}
+	if isZero(args.Account) {
+		args.Account = pulumi.StringPtr("admin")
+	}
 	var resource PDNSZone
 	err := ctx.RegisterResource("powerdns:index:PDNSZone", name, args, &resource, opts...)
 	if err != nil {
@@ -60,10 +70,22 @@ func (PDNSZoneState) ElementType() reflect.Type {
 }
 
 type pdnszoneArgs struct {
+	Account      *string  `pulumi:"account"`
+	Kind         string   `pulumi:"kind"`
+	Masters      []string `pulumi:"masters"`
+	Name         string   `pulumi:"name"`
+	Nameservers  []string `pulumi:"nameservers"`
+	Soa_edit_api *string  `pulumi:"soa_edit_api"`
 }
 
 // The set of arguments for constructing a PDNSZone resource.
 type PDNSZoneArgs struct {
+	Account      pulumi.StringPtrInput
+	Kind         pulumi.StringInput
+	Masters      pulumi.StringArrayInput
+	Name         pulumi.StringInput
+	Nameservers  pulumi.StringArrayInput
+	Soa_edit_api pulumi.StringPtrInput
 }
 
 func (PDNSZoneArgs) ElementType() reflect.Type {

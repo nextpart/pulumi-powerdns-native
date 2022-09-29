@@ -38,7 +38,7 @@ namespace Pulumi.Powerdns
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public PDNSZone(string name, PDNSZoneArgs? args = null, CustomResourceOptions? options = null)
+        public PDNSZone(string name, PDNSZoneArgs args, CustomResourceOptions? options = null)
             : base("powerdns:index:PDNSZone", name, args ?? new PDNSZoneArgs(), MakeResourceOptions(options, ""))
         {
         }
@@ -75,8 +75,37 @@ namespace Pulumi.Powerdns
 
     public sealed class PDNSZoneArgs : Pulumi.ResourceArgs
     {
+        [Input("account")]
+        public Input<string>? Account { get; set; }
+
+        [Input("kind", required: true)]
+        public Input<string> Kind { get; set; } = null!;
+
+        [Input("masters")]
+        private InputList<string>? _masters;
+        public InputList<string> Masters
+        {
+            get => _masters ?? (_masters = new InputList<string>());
+            set => _masters = value;
+        }
+
+        [Input("name", required: true)]
+        public Input<string> Name { get; set; } = null!;
+
+        [Input("nameservers")]
+        private InputList<string>? _nameservers;
+        public InputList<string> Nameservers
+        {
+            get => _nameservers ?? (_nameservers = new InputList<string>());
+            set => _nameservers = value;
+        }
+
+        [Input("soa_edit_api")]
+        public Input<string>? Soa_edit_api { get; set; }
+
         public PDNSZoneArgs()
         {
+            Account = "admin";
         }
     }
 }
