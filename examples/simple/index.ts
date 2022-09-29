@@ -1,5 +1,5 @@
-import * as xyz from "@pulumi/xyz";
+import * as powerdns from "@pulumi/powerdns";
 
-const random = new xyz.Random("my-random", { length: 24 });
+const random = new powerdns.Random("my-random", { length: 24 });
 
 export const output = random.result;

@@ -17,11 +17,12 @@ package main
 
 import (
 	_ "embed"
-	"github.com/pulumi/pulumi-xyz/provider/pkg/provider"
-	"github.com/pulumi/pulumi-xyz/provider/pkg/version"
+
+	"github.com/nextpart/pulumi-powerdns-native/provider/pkg/provider"
+	"github.com/nextpart/pulumi-powerdns-native/provider/pkg/version"
 )
 
-var providerName = "xyz"
+var providerName = "powerdns"
 
 //go:embed schema-embed.json
 var pulumiSchema []byte

@@ -22,7 +22,7 @@ import (
 	"os"
 	"path/filepath"
 
-	providerVersion "github.com/pulumi/pulumi-xyz/provider/pkg/version"
+	providerVersion "github.com/nextpart/pulumi-powerdns-native/provider/pkg/version"
 	dotnetgen "github.com/pulumi/pulumi/pkg/v3/codegen/dotnet"
 	gogen "github.com/pulumi/pulumi/pkg/v3/codegen/go"
 	nodejsgen "github.com/pulumi/pulumi/pkg/v3/codegen/nodejs"
@@ -34,7 +34,7 @@ import (
 // TemplateDir is the path to the base directory for code generator templates.
 var TemplateDir string
 
-// BaseDir is the path to the base pulumi-xyz directory.
+// BaseDir is the path to the base pulumi-powerdns directory.
 var BaseDir string
 
 // Language is the SDK language.
@@ -49,7 +49,7 @@ const (
 
 func main() {
 	flag.Usage = func() {
-		const usageFormat = "Usage: %s <language> <swagger-or-schema-file> <root-pulumi-xyz-dir>"
+		const usageFormat = "Usage: %s <language> <swagger-or-schema-file> <root-pulumi-powerdns-dir>"
 		_, err := fmt.Fprintf(flag.CommandLine.Output(), usageFormat, os.Args[0])
 		contract.IgnoreError(err)
 		flag.PrintDefaults()

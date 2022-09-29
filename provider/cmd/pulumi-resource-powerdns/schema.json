@@ -1,8 +1,8 @@
 {
-    "name": "xyz",
+    "name": "powerdns",
     "version": "0.0.1",
     "resources": {
-        "xyz:index:Random": {
+        "powerdns:index:Random": {
             "properties": {
                 "length": {
                     "type": "integer"
@@ -33,7 +33,7 @@
         },
         "go": {
             "generateResourceContainerTypes": true,
-            "importBasePath": "github.com/pulumi/pulumi-xyz/sdk/go/xyz"
+            "importBasePath": "github.com/nextpart/pulumi-powerdns-native/sdk/go/powerdns"
         },
         "nodejs": {
             "dependencies": {

@@ -17,10 +17,11 @@ package provider
 import (
 	"context"
 	"fmt"
-	"github.com/pulumi/pulumi/sdk/v3/go/common/util/logging"
-	"google.golang.org/protobuf/types/known/emptypb"
 	"math/rand"
 	"time"
+
+	"github.com/pulumi/pulumi/sdk/v3/go/common/util/logging"
+	"google.golang.org/protobuf/types/known/emptypb"
 
 	"github.com/pulumi/pulumi/pkg/v3/resource/provider"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
@@ -33,7 +34,7 @@ import (
 	pbempty "github.com/golang/protobuf/ptypes/empty"
 )
 
-type xyzProvider struct {
+type powerdnsProvider struct {
 	host    *provider.HostClient
 	name    string
 	version string
@@ -42,7 +43,7 @@ type xyzProvider struct {
 
 func makeProvider(host *provider.HostClient, name, version string, pulumiSchema []byte) (pulumirpc.ResourceProviderServer, error) {
 	// Return the new provider
-	return &xyzProvider{
+	return &powerdnsProvider{
 		host:    host,
 		name:    name,
 		version: version,
@@ -51,7 +52,7 @@ func makeProvider(host *provider.HostClient, name, version string, pulumiSchema 
 }
 
 // Attach sends the engine address to an already running plugin.
-func (p *xyzProvider) Attach(context context.Context, req *pulumirpc.PluginAttach) (*emptypb.Empty, error) {
+func (p *powerdnsProvider) Attach(context context.Context, req *pulumirpc.PluginAttach) (*emptypb.Empty, error) {
 	host, err := provider.NewHostClient(req.GetAddress())
 	if err != nil {
 		return nil, err
@@ -61,39 +62,39 @@ func (p *xyzProvider) Attach(context context.Context, req *pulumirpc.PluginAttac
 }
 
 // Call dynamically executes a method in the provider associated with a component resource.
-func (p *xyzProvider) Call(ctx context.Context, req *pulumirpc.CallRequest) (*pulumirpc.CallResponse, error) {
+func (p *powerdnsProvider) Call(ctx context.Context, req *pulumirpc.CallRequest) (*pulumirpc.CallResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "call is not yet implemented")
 }
 
 // Construct creates a new component resource.
-func (p *xyzProvider) Construct(ctx context.Context, req *pulumirpc.ConstructRequest) (*pulumirpc.ConstructResponse, error) {
+func (p *powerdnsProvider) Construct(ctx context.Context, req *pulumirpc.ConstructRequest) (*pulumirpc.ConstructResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "construct is not yet implemented")
 }
 
 // CheckConfig validates the configuration for this provider.
-func (p *xyzProvider) CheckConfig(ctx context.Context, req *pulumirpc.CheckRequest) (*pulumirpc.CheckResponse, error) {
+func (p *powerdnsProvider) CheckConfig(ctx context.Context, req *pulumirpc.CheckRequest) (*pulumirpc.CheckResponse, error) {
 	return &pulumirpc.CheckResponse{Inputs: req.GetNews()}, nil
 }
 
 // DiffConfig diffs the configuration for this provider.
-func (p *xyzProvider) DiffConfig(ctx context.Context, req *pulumirpc.DiffRequest) (*pulumirpc.DiffResponse, error) {
+func (p *powerdnsProvider) DiffConfig(ctx context.Context, req *pulumirpc.DiffRequest) (*pulumirpc.DiffResponse, error) {
 	return &pulumirpc.DiffResponse{}, nil
 }
 
 // Configure configures the resource provider with "globals" that control its behavior.
-func (p *xyzProvider) Configure(_ context.Context, req *pulumirpc.ConfigureRequest) (*pulumirpc.ConfigureResponse, error) {
+func (p *powerdnsProvider) Configure(_ context.Context, req *pulumirpc.ConfigureRequest) (*pulumirpc.ConfigureResponse, error) {
 	return &pulumirpc.ConfigureResponse{}, nil
 }
 
 // Invoke dynamically executes a built-in function in the provider.
-func (p *xyzProvider) Invoke(_ context.Context, req *pulumirpc.InvokeRequest) (*pulumirpc.InvokeResponse, error) {
+func (p *powerdnsProvider) Invoke(_ context.Context, req *pulumirpc.InvokeRequest) (*pulumirpc.InvokeResponse, error) {
 	tok := req.GetTok()
 	return nil, fmt.Errorf("unknown Invoke token '%s'", tok)
 }
 
 // StreamInvoke dynamically executes a built-in function in the provider. The result is streamed
 // back as a series of messages.
-func (p *xyzProvider) StreamInvoke(req *pulumirpc.InvokeRequest, server pulumirpc.ResourceProvider_StreamInvokeServer) error {
+func (p *powerdnsProvider) StreamInvoke(req *pulumirpc.InvokeRequest, server pulumirpc.ResourceProvider_StreamInvokeServer) error {
 	tok := req.GetTok()
 	return fmt.Errorf("unknown StreamInvoke token '%s'", tok)
 }
@@ -104,7 +105,7 @@ func (p *xyzProvider) StreamInvoke(req *pulumirpc.InvokeRequest, server pulumirp
 // representation of the properties as present in the program inputs. Though this rule is not
 // required for correctness, violations thereof can negatively impact the end-user experience, as
 // the provider inputs are using for detecting and rendering diffs.
-func (p *xyzProvider) Check(ctx context.Context, req *pulumirpc.CheckRequest) (*pulumirpc.CheckResponse, error) {
+func (p *powerdnsProvider) Check(ctx context.Context, req *pulumirpc.CheckRequest) (*pulumirpc.CheckResponse, error) {
 	urn := resource.URN(req.GetUrn())
 	label := fmt.Sprintf("%s.Create(%s)", p.name, urn)
 	logging.V(9).Infof("%s executing", label)
@@ -113,7 +114,7 @@ func (p *xyzProvider) Check(ctx context.Context, req *pulumirpc.CheckRequest) (*
 }
 
 // Diff checks what impacts a hypothetical update will have on the resource's properties.
-func (p *xyzProvider) Diff(ctx context.Context, req *pulumirpc.DiffRequest) (*pulumirpc.DiffResponse, error) {
+func (p *powerdnsProvider) Diff(ctx context.Context, req *pulumirpc.DiffRequest) (*pulumirpc.DiffResponse, error) {
 	urn := resource.URN(req.GetUrn())
 	label := fmt.Sprintf("%s.Diff(%s)", p.name, urn)
 	logging.V(9).Infof("%s executing", label)
@@ -143,7 +144,7 @@ func (p *xyzProvider) Diff(ctx context.Context, req *pulumirpc.DiffRequest) (*pu
 }
 
 // Create allocates a new instance of the provided resource and returns its unique ID afterwards.
-func (p *xyzProvider) Create(ctx context.Context, req *pulumirpc.CreateRequest) (*pulumirpc.CreateResponse, error) {
+func (p *powerdnsProvider) Create(ctx context.Context, req *pulumirpc.CreateRequest) (*pulumirpc.CreateResponse, error) {
 	urn := resource.URN(req.GetUrn())
 	label := fmt.Sprintf("%s.Create(%s)", p.name, urn)
 	logging.V(9).Infof("%s executing", label)
@@ -182,7 +183,7 @@ func (p *xyzProvider) Create(ctx context.Context, req *pulumirpc.CreateRequest) 
 }
 
 // Read the current live state associated with a resource.
-func (p *xyzProvider) Read(ctx context.Context, req *pulumirpc.ReadRequest) (*pulumirpc.ReadResponse, error) {
+func (p *powerdnsProvider) Read(ctx context.Context, req *pulumirpc.ReadRequest) (*pulumirpc.ReadResponse, error) {
 	urn := resource.URN(req.GetUrn())
 	label := fmt.Sprintf("%s.Read(%s)", p.name, urn)
 	logging.V(9).Infof("%s executing", label)
@@ -191,7 +192,7 @@ func (p *xyzProvider) Read(ctx context.Context, req *pulumirpc.ReadRequest) (*pu
 }
 
 // Update updates an existing resource with new values.
-func (p *xyzProvider) Update(ctx context.Context, req *pulumirpc.UpdateRequest) (*pulumirpc.UpdateResponse, error) {
+func (p *powerdnsProvider) Update(ctx context.Context, req *pulumirpc.UpdateRequest) (*pulumirpc.UpdateResponse, error) {
 	urn := resource.URN(req.GetUrn())
 	label := fmt.Sprintf("%s.Update(%s)", p.name, urn)
 	logging.V(9).Infof("%s executing", label)
@@ -202,7 +203,7 @@ func (p *xyzProvider) Update(ctx context.Context, req *pulumirpc.UpdateRequest) 
 
 // Delete tears down an existing resource with the given ID.  If it fails, the resource is assumed
 // to still exist.
-func (p *xyzProvider) Delete(ctx context.Context, req *pulumirpc.DeleteRequest) (*pbempty.Empty, error) {
+func (p *powerdnsProvider) Delete(ctx context.Context, req *pulumirpc.DeleteRequest) (*pbempty.Empty, error) {
 	urn := resource.URN(req.GetUrn())
 	label := fmt.Sprintf("%s.Update(%s)", p.name, urn)
 	logging.V(9).Infof("%s executing", label)
@@ -212,14 +213,14 @@ func (p *xyzProvider) Delete(ctx context.Context, req *pulumirpc.DeleteRequest) 
 }
 
 // GetPluginInfo returns generic information about this plugin, like its version.
-func (p *xyzProvider) GetPluginInfo(context.Context, *pbempty.Empty) (*pulumirpc.PluginInfo, error) {
+func (p *powerdnsProvider) GetPluginInfo(context.Context, *pbempty.Empty) (*pulumirpc.PluginInfo, error) {
 	return &pulumirpc.PluginInfo{
 		Version: p.version,
 	}, nil
 }
 
 // GetSchema returns the JSON-serialized schema for the provider.
-func (p *xyzProvider) GetSchema(ctx context.Context, req *pulumirpc.GetSchemaRequest) (*pulumirpc.GetSchemaResponse, error) {
+func (p *powerdnsProvider) GetSchema(ctx context.Context, req *pulumirpc.GetSchemaRequest) (*pulumirpc.GetSchemaResponse, error) {
 	if v := req.GetVersion(); v != 0 {
 		return nil, fmt.Errorf("unsupported schema version %d", v)
 	}
@@ -231,14 +232,14 @@ func (p *xyzProvider) GetSchema(ctx context.Context, req *pulumirpc.GetSchemaReq
 // creation error or an initialization error). Since Cancel is advisory and non-blocking, it is up
 // to the host to decide how long to wait after Cancel is called before (e.g.)
 // hard-closing any gRPC connection.
-func (p *xyzProvider) Cancel(context.Context, *pbempty.Empty) (*pbempty.Empty, error) {
+func (p *powerdnsProvider) Cancel(context.Context, *pbempty.Empty) (*pbempty.Empty, error) {
 	// TODO
 	return &pbempty.Empty{}, nil
 }
 
 func makeRandom(length int) string {
 	seededRand := rand.New(rand.NewSource(time.Now().UnixNano()))
-	charset := []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+	charset := []rune("abcdefghijklmnopqrstuvwpowerdnsABCDEFGHIJKLMNOPQRSTUVWPowerdns0123456789")
 
 	result := make([]rune, length)
 	for i := range result {

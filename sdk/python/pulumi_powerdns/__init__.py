@@ -11,11 +11,11 @@ _utilities.register(
     resource_modules="""
 [
  {
-  "pkg": "xyz",
+  "pkg": "powerdns",
   "mod": "index",
-  "fqn": "pulumi_xyz",
+  "fqn": "pulumi_powerdns",
   "classes": {
-   "xyz:index:Random": "Random"
+   "powerdns:index:Random": "Random"
   }
  }
 ]
@@ -23,9 +23,9 @@ _utilities.register(
     resource_packages="""
 [
  {
-  "pkg": "xyz",
-  "token": "pulumi:providers:xyz",
-  "fqn": "pulumi_xyz",
+  "pkg": "powerdns",
+  "token": "pulumi:providers:powerdns",
+  "fqn": "pulumi_powerdns",
   "class": "Provider"
  }
 ]
