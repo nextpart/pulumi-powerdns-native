@@ -5,6 +5,8 @@
 from . import _utilities
 import typing
 # Export this package's modules as members:
+from .pdns_record import *
+from .pdns_zone import *
 from .provider import *
 from .random import *
 _utilities.register(
@@ -15,6 +17,8 @@ _utilities.register(
   "mod": "index",
   "fqn": "pulumi_powerdns",
   "classes": {
+   "powerdns:index:PDNSRecord": "PDNSRecord",
+   "powerdns:index:PDNSZone": "PDNSZone",
    "powerdns:index:Random": "Random"
   }
  }

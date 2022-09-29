@@ -23,6 +23,72 @@
             "requiredInputs": [
                 "length"
             ]
+        },
+        "powerdns:index:PDNSRecord": {
+            "properties": {
+                "zone":{
+                    "type": "string"
+                },
+                "name":{
+                    "type": "string"
+                },
+                "type":{
+                    "type": "string"
+                },
+                "ttl":{
+                    "type": "integer"
+                },
+                "records":{
+                    "type": "array",
+                    "items":{
+                        "type": "string"
+                    }
+                },
+                "set_ptr":{
+                    "type": "boolean",
+                    "description": "For A and AAAA records, if true, create corresponding PTR."
+                }
+            },
+            "required": [
+                "zone",
+                "name",
+                "type",
+                "ttl",
+                "records"
+            ]
+        },
+        "powerdns:index:PDNSZone": {
+            "properties": {
+                "name":{
+                    "type": "string"
+                },
+                "kind":{
+                    "type": "string"
+                },
+                "account":{
+                    "type": "string",
+                    "default": "admin"
+                },
+                "nameservers":{
+                    "type": "array",
+                    "items":{
+                        "type": "string"
+                    }
+                },
+                "masters":{
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "soa_edit_api":{
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "kind"
+            ]
         }
     },
     "language": {

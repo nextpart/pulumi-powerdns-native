@@ -20,6 +20,10 @@ func (m *module) Version() semver.Version {
 
 func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi.Resource, err error) {
 	switch typ {
+	case "powerdns:index:PDNSRecord":
+		r = &PDNSRecord{}
+	case "powerdns:index:PDNSZone":
+		r = &PDNSZone{}
 	case "powerdns:index:Random":
 		r = &Random{}
 	default:

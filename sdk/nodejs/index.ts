@@ -5,16 +5,24 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
 // Export members:
+export * from "./pdnsrecord";
+export * from "./pdnszone";
 export * from "./provider";
 export * from "./random";
 
 // Import resources to register:
+import { PDNSRecord } from "./pdnsrecord";
+import { PDNSZone } from "./pdnszone";
 import { Random } from "./random";
 
 const _module = {
     version: utilities.getVersion(),
     construct: (name: string, type: string, urn: string): pulumi.Resource => {
         switch (type) {
+            case "powerdns:index:PDNSRecord":
+                return new PDNSRecord(name, <any>undefined, { urn })
+            case "powerdns:index:PDNSZone":
+                return new PDNSZone(name, <any>undefined, { urn })
             case "powerdns:index:Random":
                 return new Random(name, <any>undefined, { urn })
             default:
