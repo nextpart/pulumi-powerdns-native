@@ -17,7 +17,6 @@
         "pdnsrecord.ts",
         "pdnszone.ts",
         "provider.ts",
-        "random.ts",
         "utilities.ts"
     ]
 }

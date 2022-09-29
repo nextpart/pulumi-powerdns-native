@@ -2,28 +2,6 @@
     "name": "powerdns",
     "version": "0.0.1",
     "resources": {
-        "powerdns:index:Random": {
-            "properties": {
-                "length": {
-                    "type": "integer"
-                },
-                "result": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "length",
-                "result"
-            ],
-            "inputProperties": {
-                "length": {
-                    "type": "integer"
-                }
-            },
-            "requiredInputs": [
-                "length"
-            ]
-        },
         "powerdns:index:PDNSRecord": {
             "properties": {
                 "zone":{

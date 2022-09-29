@@ -8,12 +8,10 @@ import * as utilities from "./utilities";
 export * from "./pdnsrecord";
 export * from "./pdnszone";
 export * from "./provider";
-export * from "./random";
 
 // Import resources to register:
 import { PDNSRecord } from "./pdnsrecord";
 import { PDNSZone } from "./pdnszone";
-import { Random } from "./random";
 
 const _module = {
     version: utilities.getVersion(),
@@ -23,8 +21,6 @@ const _module = {
                 return new PDNSRecord(name, <any>undefined, { urn })
             case "powerdns:index:PDNSZone":
                 return new PDNSZone(name, <any>undefined, { urn })
-            case "powerdns:index:Random":
-                return new Random(name, <any>undefined, { urn })
             default:
                 throw new Error(`unknown resource type ${type}`);
         }

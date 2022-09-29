@@ -8,7 +8,6 @@ import typing
 from .pdns_record import *
 from .pdns_zone import *
 from .provider import *
-from .random import *
 _utilities.register(
     resource_modules="""
 [
@@ -18,8 +17,7 @@ _utilities.register(
   "fqn": "pulumi_powerdns",
   "classes": {
    "powerdns:index:PDNSRecord": "PDNSRecord",
-   "powerdns:index:PDNSZone": "PDNSZone",
-   "powerdns:index:Random": "Random"
+   "powerdns:index:PDNSZone": "PDNSZone"
   }
  }
 ]
