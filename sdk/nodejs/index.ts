@@ -9,6 +9,13 @@ export * from "./pdnsrecord";
 export * from "./pdnszone";
 export * from "./provider";
 
+// Export sub-modules:
+import * as config from "./config";
+
+export {
+    config,
+};
+
 // Import resources to register:
 import { PDNSRecord } from "./pdnsrecord";
 import { PDNSZone } from "./pdnszone";

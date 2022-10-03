@@ -8,6 +8,14 @@ import typing
 from .pdns_record import *
 from .pdns_zone import *
 from .provider import *
+
+# Make subpackages available:
+if typing.TYPE_CHECKING:
+    import pulumi_powerdns.config as __config
+    config = __config
+else:
+    config = _utilities.lazy_import('pulumi_powerdns.config')
+
 _utilities.register(
     resource_modules="""
 [

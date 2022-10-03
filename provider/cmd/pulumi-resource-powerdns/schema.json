@@ -1,6 +1,44 @@
 {
     "name": "powerdns",
     "version": "0.0.1",
+    "language": {
+        "csharp": {
+            "packageReferences": {
+                "Pulumi": "3.*"
+            }
+        },
+        "go": {
+            "generateResourceContainerTypes": true,
+            "importBasePath": "github.com/nextpart/pulumi-powerdns-native/sdk/go/powerdns"
+        },
+        "nodejs": {
+            "dependencies": {
+                "@pulumi/pulumi": "^3.0.0"
+            }
+        },
+        "python": {
+            "requires": {
+                "pulumi": ">=3.0.0,<4.0.0"
+            }
+        }
+    },
+    "config": {
+        "variables": {
+            "apiEndpoint":{
+                "type": "string",
+                "description": "The api endpoint of the powerdns server\n"
+            },
+            "apiKey": {
+                "type": "string",
+                "description": "The access key for API operations\n"
+            },
+            "insecure": {
+                "type": "boolean",
+                "description": "Explicitly allow the provider to perform \"insecure\" SSL requests. If omitted, default value is `false`\n"
+            }
+        },
+        "required": ["apiEndpoint", "apiKey"]
+    },
     "resources": {
         "powerdns:index:PDNSRecord": {
             "properties": {
@@ -129,27 +167,6 @@
                 "name",
                 "kind"
             ]
-        }
-    },
-    "language": {
-        "csharp": {
-            "packageReferences": {
-                "Pulumi": "3.*"
-            }
-        },
-        "go": {
-            "generateResourceContainerTypes": true,
-            "importBasePath": "github.com/nextpart/pulumi-powerdns-native/sdk/go/powerdns"
-        },
-        "nodejs": {
-            "dependencies": {
-                "@pulumi/pulumi": "^3.0.0"
-            }
-        },
-        "python": {
-            "requires": {
-                "pulumi": ">=3.0.0,<4.0.0"
-            }
         }
     }
 }
