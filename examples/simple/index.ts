@@ -7,5 +7,5 @@ const record = new powerdns.Record("test", {
 })
 
 const record2 = new powerdns.Record("foo", { 
-    zone: "foobar.com.", type: "A", name: "foo.foobar.com.", ttl: 300, records : ["10.0.0.1", "", "10.0.0.3", "10.0.0.4"]
+    zone: "foobar.com.", type: "A", name: "foo.foobar.com.", ttl: 300, records : ["10.0.0.1", "10.0.0.3", "10.0.0.4"]
 })
