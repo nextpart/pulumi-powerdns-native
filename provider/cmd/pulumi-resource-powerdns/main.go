@@ -17,7 +17,7 @@ package main
 import (
 	p "github.com/pulumi/pulumi-go-provider"
 
-	powerdns "github.com/nextpart/pulumi-powerdns/provider/pkg/provider"
+	powerdns "github.com/nextpart/pulumi-powerdns-native/provider/pkg/provider"
 )
 
 // Serve the provider against Pulumi's Provider protocol.

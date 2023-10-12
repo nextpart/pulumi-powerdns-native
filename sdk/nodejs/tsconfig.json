@@ -17,7 +17,6 @@
         "config/vars.ts",
         "index.ts",
         "provider.ts",
-        "random.ts",
         "record.ts",
         "utilities.ts",
         "zone.ts"

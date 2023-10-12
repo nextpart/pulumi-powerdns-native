@@ -10,11 +10,6 @@ export type Provider = import("./provider").Provider;
 export const Provider: typeof import("./provider").Provider = null as any;
 utilities.lazyLoad(exports, ["Provider"], () => require("./provider"));
 
-export { RandomArgs } from "./random";
-export type Random = import("./random").Random;
-export const Random: typeof import("./random").Random = null as any;
-utilities.lazyLoad(exports, ["Random"], () => require("./random"));
-
 export { RecordArgs } from "./record";
 export type Record = import("./record").Record;
 export const Record: typeof import("./record").Record = null as any;
@@ -37,8 +32,6 @@ const _module = {
     version: utilities.getVersion(),
     construct: (name: string, type: string, urn: string): pulumi.Resource => {
         switch (type) {
-            case "powerdns:index:Random":
-                return new Random(name, <any>undefined, { urn })
             case "powerdns:index:Record":
                 return new Record(name, <any>undefined, { urn })
             case "powerdns:index:Zone":

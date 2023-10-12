@@ -2,7 +2,7 @@ PROJECT_NAME := Pulumi Powerdns Resource Provider
 
 PACK             := powerdns
 PACKDIR          := sdk
-PROJECT          := github.com/nextpart/pulumi-powerdns
+PROJECT          := github.com/nextpart/pulumi-powerdns-native
 NODE_MODULE_NAME := @pulumi/powerdns
 NUGET_PKG_NAME   := Pulumi.Powerdns
 

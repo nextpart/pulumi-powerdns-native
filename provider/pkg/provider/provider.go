@@ -27,7 +27,7 @@ import (
 	"github.com/pulumi/pulumi-go-provider/infer"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/tokens"
 
-	pdns "github.com/nextpart/pulumi-powerdns/provider/pkg/provider/powerdns"
+	pdns "github.com/nextpart/pulumi-powerdns-native/provider/pkg/provider/powerdns"
 )
 
 // Version is initialized by the Go linker to contain the semver of this build.
@@ -40,7 +40,6 @@ func Provider() p.Provider {
 	// In this case, a single custom resource.
 	return infer.Provider(infer.Options{
 		Resources: []infer.InferredResource{
-			infer.Resource[pdns.Random, pdns.RandomArgs, pdns.RandomState](),
 			infer.Resource[*pdns.Zone, pdns.ZoneArgs, pdns.ZoneState](),
 			infer.Resource[*pdns.Record, pdns.RecordArgs, pdns.RecordState](),
 		},
@@ -50,6 +49,3 @@ func Provider() p.Provider {
 		Config: infer.Config[*pdns.Config](),
 	})
 }
-
-
-

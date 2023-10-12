@@ -25,7 +25,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	powerdns "github.com/nextpart/pulumi-powerdns/provider"
+	powerdns "github.com/nextpart/pulumi-powerdns-native/provider/"
 )
 
 func TestRandomCreate(t *testing.T) {
