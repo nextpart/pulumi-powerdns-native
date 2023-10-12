@@ -2,8 +2,7 @@
     "name": "@pulumi/powerdns",
     "version": "${VERSION}",
     "scripts": {
-        "build": "tsc",
-        "install": "node scripts/install-pulumi-plugin.js resource powerdns ${VERSION}"
+        "build": "tsc"
     },
     "dependencies": {
         "@pulumi/pulumi": "^3.42.0"

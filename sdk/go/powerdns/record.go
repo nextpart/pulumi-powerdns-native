@@ -9,6 +9,7 @@ import (
 
 	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 	"internal"
 )
 
@@ -122,6 +123,12 @@ func (i *Record) ToRecordOutputWithContext(ctx context.Context) RecordOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(RecordOutput)
 }
 
+func (i *Record) ToOutput(ctx context.Context) pulumix.Output[*Record] {
+	return pulumix.Output[*Record]{
+		OutputState: i.ToRecordOutputWithContext(ctx).OutputState,
+	}
+}
+
 type RecordOutput struct{ *pulumi.OutputState }
 
 func (RecordOutput) ElementType() reflect.Type {
@@ -134,6 +141,12 @@ func (o RecordOutput) ToRecordOutput() RecordOutput {
 
 func (o RecordOutput) ToRecordOutputWithContext(ctx context.Context) RecordOutput {
 	return o
+}
+
+func (o RecordOutput) ToOutput(ctx context.Context) pulumix.Output[*Record] {
+	return pulumix.Output[*Record]{
+		OutputState: o.OutputState,
+	}
 }
 
 func (o RecordOutput) Name() pulumi.StringOutput {
