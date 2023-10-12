@@ -1,12 +1,6 @@
-# Pulumi Native Provider Boilerplate
+# Pulumi PowerDNS Native Provider
 
-This repository is a boilerplate showing how to create a native Pulumi provider.
-
-## Authoring a Pulumi Native Provider
-
-This boilerplate creates a working Pulumi-owned provider named `powerdns`.
-It implements a random number generator that you can [build and test out for yourself](#test-against-the-example) and then replace the Random code with code specific to your provider.
-
+This repository is a contains a pulumi native provider for the PowerDNS Authoritative Nameserver. This allow the creation of zones and records. 
 
 ### Prerequisites
 
@@ -19,23 +13,6 @@ Ensure the following tools are installed and present in your `$PATH`:
 * [TypeScript](https://www.typescriptlang.org/)
 * [Python](https://www.python.org/downloads/) (called as `python3`).  For recent versions of MacOS, the system-installed version is fine.
 * [.NET](https://dotnet.microsoft.com/download)
-
-
-### Creating and Initializing the Repository
-
-Pulumi offers this repository as a [GitHub template repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template) for convenience.  From this repository:
-
-1. Click "Use this template".
-1. Set the following options:
-   * Owner: pulumi 
-   * Repository name: pulumi-powerdns-native (replace "powerdns" with the name of your provider)
-   * Description: Pulumi provider for powerdns
-   * Repository type: Public
-1. Clone the generated repository.
-
-From the templated repository:
-
-1. Search-replace `powerdns` with the name of your desired provider.
 
 #### Build the provider and install the plugin
 
@@ -83,10 +60,6 @@ the [Pulumi Go Provider docs](https://github.com/pulumi/pulumi-go-provider).
 Create an example program using the resources defined in your provider, and place it in the `examples/` folder.
 
 You can now repeat the steps for [build, install, and test](#test-against-the-example).
-
-## Configuring CI and releases
-
-1. Follow the instructions laid out in the [deployment templates](./deployment-templates/README-DEPLOYMENT.md).
 
 ## References
 
