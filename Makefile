@@ -1,15 +1,15 @@
-PROJECT_NAME := Pulumi Xyz Resource Provider
+PROJECT_NAME := Pulumi Powerdns Resource Provider
 
-PACK             := xyz
+PACK             := powerdns
 PACKDIR          := sdk
-PROJECT          := github.com/pulumi/pulumi-xyz
-NODE_MODULE_NAME := @pulumi/xyz
-NUGET_PKG_NAME   := Pulumi.Xyz
+PROJECT          := github.com/nextpart/pulumi-powerdns
+NODE_MODULE_NAME := @pulumi/powerdns
+NUGET_PKG_NAME   := Pulumi.Powerdns
 
 PROVIDER        := pulumi-resource-${PACK}
 VERSION         ?= $(shell pulumictl get version)
 PROVIDER_PATH   := provider
-VERSION_PATH    := ${PROVIDER_PATH}.Version
+VERSION_PATH    := ${PROVIDER_PATH}/pkg/provider.Version
 
 GOPATH			:= $(shell go env GOPATH)
 

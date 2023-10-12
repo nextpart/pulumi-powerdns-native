@@ -1,4 +1,4 @@
-module github.com/pulumi/pulumi-xyz/sdk
+module github.com/nextpart/pulumi-powerdns/sdk
 
 go 1.21
 

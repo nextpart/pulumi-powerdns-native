@@ -13,9 +13,13 @@
         "strict": true
     },
     "files": [
+        "config/index.ts",
+        "config/vars.ts",
         "index.ts",
         "provider.ts",
         "random.ts",
-        "utilities.ts"
+        "record.ts",
+        "utilities.ts",
+        "zone.ts"
     ]
 }
