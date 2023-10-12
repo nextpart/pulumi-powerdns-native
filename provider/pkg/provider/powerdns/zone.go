@@ -38,7 +38,6 @@ type ZoneState struct {
 // implements the following interfaces. If the function signature doesn't match or isn't implemented,
 // we get nice compile time errors at this location.
 
-
 var _ = (infer.CustomRead[ZoneArgs, ZoneState])((*Zone)(nil))
 var _ = (infer.CustomUpdate[ZoneArgs, ZoneState])((*Zone)(nil))
 var _ = (infer.CustomDelete[ZoneState])((*Zone)(nil))
