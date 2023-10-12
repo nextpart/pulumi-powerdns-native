@@ -131,13 +131,13 @@ jobs:
         dotnetversion:
           - 3.1.301
         goversion:
-          - 1.18.x
+          - 1.21.x
         language:
           - nodejs
           - python
           - dotnet
           - go
         nodeversion:
-          - 14.x
+          - 16.x
         pythonversion:
           - "3.9"
