@@ -129,7 +129,7 @@ func (r *Record) Delete(ctx p.Context, id string, props RecordState) (err error)
 	ctx.Log(diag.Info, fmt.Sprintf("Deleting PowerDNS Record: %s", props.RecId))
 	err = c.Client.DeleteRecordSetByID(props.RecordArgs.Zone, props.RecId)
 
-	if err != nil {
+	if err != nil && !strings.Contains(err.Error(), "Not Found") {
 		return fmt.Errorf("Error deleting PowerDNS Record: %s", err)
 	}
 

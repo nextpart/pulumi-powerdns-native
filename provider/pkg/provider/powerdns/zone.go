@@ -170,7 +170,7 @@ func (*Zone) Delete(ctx p.Context, id string, props ZoneState) (err error) {
 	ctx.Log(diag.Info, fmt.Sprintf("Deleting PowerDNS Zone: %s", props.ZoneArgs.Name))
 	err = c.Client.DeleteZone(props.ZoneArgs.Name)
 
-	if err != nil {
+	if err != nil && !strings.Contains(err.Error(), "Not Found") {
 		return fmt.Errorf("Error deleting PowerDNS Zone: %s", err)
 	}
 	return nil
