@@ -66,17 +66,7 @@ const record2 = new powerdns.Record("foo", {
 ### Python
 
 ```python
-import pulumi_aci as aci
-
-tenant = aci.apic.Rest(
-    "TENANT1",
-    dn="uni/tn-TENANT1",
-    class_name="fvTenant",
-    content={
-        "name": "TENANT1",
-        "descr": "Tenant created by Pulumi",
-    },
-)
+import pulumi_powerdns as aci
 ```
 
 ### Go
@@ -90,19 +80,6 @@ import (
 
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
-
-		tenant, err := aci.apic.NewRest(ctx, "TENANT1", &aci.apic.RestArgs{
-            Dn: pulumi.String("uni/tn-TENANT1"),
-            ClassName: pulumi.String("fvTenant"),
-            Content: pulumi.StringMap{
-                "name": pulumi.String("TENANT1"),
-                "descr": pulumi.String("Tenant created by Pulumi"),
-            },
-		})
-		if err != nil {
-			return fmt.Errorf("error creating tenant: %v", err)
-		}
-
 		return nil
 	})
 }
@@ -112,20 +89,12 @@ func main() {
 
 ```csharp
 using Pulumi;
-using Pulumi.Aci;
+using Pulumi.Powerdns;
 
-class AciTenant : Stack
+class Powerdns : Stack
 {
-    public AciTenant()
+    public Powerdns()
     {
-        var tenant = new Rest("TENANT1", new RestArgs{
-            Dn: "uni/tn-TENANT1",
-            ClassName: "fvTenant",
-            Content: {
-                { "name", "TENANT1" },
-                { "descr", "Tenant created by Pulumi" },
-            },
-        });
     }
 }
 ```
