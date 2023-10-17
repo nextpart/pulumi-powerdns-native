@@ -6,7 +6,7 @@ import (
 
 	p "github.com/pulumi/pulumi-go-provider"
 	"github.com/pulumi/pulumi-go-provider/infer"
-	//"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
 )
 
 type Config struct {
@@ -28,30 +28,30 @@ func (c *Config) Annotate(a infer.Annotator) {
 	//a.SetDefault(&c.Insecure, true, "API_INSECURE")
 }
 
-// var _ = (infer.CustomCheck[*Config])((*Config)(nil))
+var _ = (infer.CustomCheck[*Config])((*Config)(nil))
 
-// // workaround for https://github.com/pulumi/pulumi-go-provider/issues/110
-// func (c *Config) Check(ctx p.Context, name string, oldInputs, newInputs resource.PropertyMap) (*Config, []p.CheckFailure, error) {
-// 	c.ApiEndpoint = newInputs["apiEndpoint"].StringValue()
-// 	c.ApiKey = newInputs["ApiKey"].StringValue()
-// 	if newInputs["insecure"].IsBool() {
-// 		insecure := newInputs["insecure"].BoolValue()
-// 		c.Insecure = &insecure
-// 	}
-// 	if newInputs["logging"].IsBool() {
-// 		logging := newInputs["logging"].BoolValue()
-// 		c.Logging = &logging
-// 	}
+// workaround for https://github.com/pulumi/pulumi-go-provider/issues/110
+func (c *Config) Check(ctx p.Context, name string, oldInputs, newInputs resource.PropertyMap) (*Config, []p.CheckFailure, error) {
+	c.ApiEndpoint = newInputs["apiEndpoint"].StringValue()
+	c.ApiKey = newInputs["ApiKey"].StringValue()
+	if newInputs["insecure"].IsBool() {
+		insecure := newInputs["insecure"].BoolValue()
+		c.Insecure = &insecure
+	}
+	if newInputs["logging"].IsBool() {
+		logging := newInputs["logging"].BoolValue()
+		c.Logging = &logging
+	}
 
-// 	return c, []p.CheckFailure{}, nil
-// }
+	return c, []p.CheckFailure{}, nil
+}
 
 var _ = (infer.CustomConfigure)((*Config)(nil))
 
 func (c *Config) Configure(ctx p.Context) error {
 	var insecure bool
 	if c.Insecure == nil {
-		insecureStr := os.Getenv("PDNS_INSECURE")
+		insecureStr := os.Getenv("POWERDNS_INSECURE")
 		if insecureStr == "" {
 			insecure = true
 		} else {
