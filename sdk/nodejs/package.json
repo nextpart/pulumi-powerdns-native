@@ -1,11 +1,19 @@
 {
-    "name": "@pulumi/powerdns",
+    "name": "@nextpart/powerdns",
     "version": "${VERSION}",
+    "keywords": [
+        "pulumi",
+        "powerdns",
+        "dns"
+    ],
+    "homepage": "https://pulumi.com",
+    "repository": "https://github.com/nextpart/pulumi-powerdns-native",
+    "license": "MPL-2.0",
     "scripts": {
         "build": "tsc"
     },
     "dependencies": {
-        "@pulumi/pulumi": "^3.42.0"
+        "@pulumi/pulumi": "^3.0.0"
     },
     "devDependencies": {
         "@types/node": "^14",
@@ -13,6 +21,7 @@
     },
     "pulumi": {
         "resource": true,
-        "name": "powerdns"
+        "name": "powerdns",
+        "server": "github://api.github.com/nextpart"
     }
 }

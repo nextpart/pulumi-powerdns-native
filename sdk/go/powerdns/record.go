@@ -8,9 +8,9 @@ import (
 	"reflect"
 
 	"errors"
+	"github.com/nextpart/pulumi-powerdns-native/sdk/go/powerdns/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
-	"internal"
 )
 
 // Test
@@ -129,6 +129,68 @@ func (i *Record) ToOutput(ctx context.Context) pulumix.Output[*Record] {
 	}
 }
 
+// RecordArrayInput is an input type that accepts RecordArray and RecordArrayOutput values.
+// You can construct a concrete instance of `RecordArrayInput` via:
+//
+//	RecordArray{ RecordArgs{...} }
+type RecordArrayInput interface {
+	pulumi.Input
+
+	ToRecordArrayOutput() RecordArrayOutput
+	ToRecordArrayOutputWithContext(context.Context) RecordArrayOutput
+}
+
+type RecordArray []RecordInput
+
+func (RecordArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]*Record)(nil)).Elem()
+}
+
+func (i RecordArray) ToRecordArrayOutput() RecordArrayOutput {
+	return i.ToRecordArrayOutputWithContext(context.Background())
+}
+
+func (i RecordArray) ToRecordArrayOutputWithContext(ctx context.Context) RecordArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(RecordArrayOutput)
+}
+
+func (i RecordArray) ToOutput(ctx context.Context) pulumix.Output[[]*Record] {
+	return pulumix.Output[[]*Record]{
+		OutputState: i.ToRecordArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+// RecordMapInput is an input type that accepts RecordMap and RecordMapOutput values.
+// You can construct a concrete instance of `RecordMapInput` via:
+//
+//	RecordMap{ "key": RecordArgs{...} }
+type RecordMapInput interface {
+	pulumi.Input
+
+	ToRecordMapOutput() RecordMapOutput
+	ToRecordMapOutputWithContext(context.Context) RecordMapOutput
+}
+
+type RecordMap map[string]RecordInput
+
+func (RecordMap) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]*Record)(nil)).Elem()
+}
+
+func (i RecordMap) ToRecordMapOutput() RecordMapOutput {
+	return i.ToRecordMapOutputWithContext(context.Background())
+}
+
+func (i RecordMap) ToRecordMapOutputWithContext(ctx context.Context) RecordMapOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(RecordMapOutput)
+}
+
+func (i RecordMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*Record] {
+	return pulumix.Output[map[string]*Record]{
+		OutputState: i.ToRecordMapOutputWithContext(ctx).OutputState,
+	}
+}
+
 type RecordOutput struct{ *pulumi.OutputState }
 
 func (RecordOutput) ElementType() reflect.Type {
@@ -181,7 +243,63 @@ func (o RecordOutput) Zone() pulumi.StringOutput {
 	return o.ApplyT(func(v *Record) pulumi.StringOutput { return v.Zone }).(pulumi.StringOutput)
 }
 
+type RecordArrayOutput struct{ *pulumi.OutputState }
+
+func (RecordArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]*Record)(nil)).Elem()
+}
+
+func (o RecordArrayOutput) ToRecordArrayOutput() RecordArrayOutput {
+	return o
+}
+
+func (o RecordArrayOutput) ToRecordArrayOutputWithContext(ctx context.Context) RecordArrayOutput {
+	return o
+}
+
+func (o RecordArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*Record] {
+	return pulumix.Output[[]*Record]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o RecordArrayOutput) Index(i pulumi.IntInput) RecordOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *Record {
+		return vs[0].([]*Record)[vs[1].(int)]
+	}).(RecordOutput)
+}
+
+type RecordMapOutput struct{ *pulumi.OutputState }
+
+func (RecordMapOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]*Record)(nil)).Elem()
+}
+
+func (o RecordMapOutput) ToRecordMapOutput() RecordMapOutput {
+	return o
+}
+
+func (o RecordMapOutput) ToRecordMapOutputWithContext(ctx context.Context) RecordMapOutput {
+	return o
+}
+
+func (o RecordMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*Record] {
+	return pulumix.Output[map[string]*Record]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o RecordMapOutput) MapIndex(k pulumi.StringInput) RecordOutput {
+	return pulumi.All(o, k).ApplyT(func(vs []interface{}) *Record {
+		return vs[0].(map[string]*Record)[vs[1].(string)]
+	}).(RecordOutput)
+}
+
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*RecordInput)(nil)).Elem(), &Record{})
+	pulumi.RegisterInputType(reflect.TypeOf((*RecordArrayInput)(nil)).Elem(), RecordArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*RecordMapInput)(nil)).Elem(), RecordMap{})
 	pulumi.RegisterOutputType(RecordOutput{})
+	pulumi.RegisterOutputType(RecordArrayOutput{})
+	pulumi.RegisterOutputType(RecordMapOutput{})
 }

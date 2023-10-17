@@ -4,9 +4,9 @@
 package config
 
 import (
+	"github.com/nextpart/pulumi-powerdns-native/sdk/go/powerdns/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
-	"internal"
 )
 
 var _ = internal.GetEnvOrDefault

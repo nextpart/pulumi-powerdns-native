@@ -2,6 +2,105 @@
 
 This repository is a contains a pulumi native provider for the PowerDNS Authoritative Nameserver. This allow the creation of zones and records. 
 
+## Installing
+
+This package is available for several languages/platforms:
+
+### Node.js (JavaScript/TypeScript)
+
+To use from JavaScript or TypeScript in Node.js, install using either `npm`:
+
+```bash
+npm install @nextpart/powerdns
+```
+
+or `yarn`:
+
+```bash
+yarn add @nextpart/powerdns
+```
+
+### Python
+
+To use from Python, install using `pip`:
+
+```bash
+pip install pulumi_powerdns
+```
+
+### Go
+
+To use from Go, use `go get` to grab the latest version of the library:
+
+```bash
+go get github.com/nextpart/pulumi-powerdns-native/sdk/go/...
+```
+
+### .NET
+
+To use from .NET, install using `dotnet add package`:
+
+```bash
+dotnet add package Pulumi.Aci
+```
+
+## Example
+
+### Node.js (JavaScript/TypeScript)
+
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as powerdns from "@pulumi/powerdns";
+
+const zone = new powerdns.Zone("foobar", { name: "foobar.com.", kind: "master", account: "admin"});
+
+const record = new powerdns.Record("test", { 
+    zone: "foobar.com.", type: "A", name: "test.foobar.com.", ttl: 300, records : ["10.0.0.1", "10.0.0.2", "10.0.0.3", "10.0.0.4"]
+})
+
+const record2 = new powerdns.Record("foo", { 
+    zone: "foobar.com.", type: "A", name: "foo.foobar.com.", ttl: 300, records : ["10.0.0.1", "10.0.0.3", "10.0.0.4"]
+})
+```
+ 
+### Python
+
+```python
+import pulumi_powerdns as aci
+```
+
+### Go
+
+```go
+import (
+	"fmt"
+	pdns "github.com/nextpart/pulumi-powerdns-native/sdk/go/powerdns"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		return nil
+	})
+}
+```
+
+### .NET
+
+```csharp
+using Pulumi;
+using Pulumi.Powerdns;
+
+class Powerdns : Stack
+{
+    public Powerdns()
+    {
+    }
+}
+```
+
+
+## Development
 ### Prerequisites
 
 Ensure the following tools are installed and present in your `$PATH`:

@@ -20,8 +20,15 @@ def readme():
 setup(name='pulumi_powerdns',
       python_requires='>=3.7',
       version=VERSION,
+      description="The Pulumi PowerDNS provider provides resources to interact with a PowerDNS Authoritative DNS Server.",
       long_description=readme(),
       long_description_content_type='text/markdown',
+      keywords='pulumi powerdns dns',
+      url='https://pulumi.com',
+      project_urls={
+          'Repository': 'https://github.com/nextpart/pulumi-powerdns-native'
+      },
+      license='MPL-2.0',
       packages=find_packages(),
       package_data={
           'pulumi_powerdns': [
@@ -31,7 +38,7 @@ setup(name='pulumi_powerdns',
       },
       install_requires=[
           'parver>=0.2.1',
-          'pulumi',
+          'pulumi>=3.0.0,<4.0.0',
           'semver>=2.8.1'
       ],
       zip_safe=False)

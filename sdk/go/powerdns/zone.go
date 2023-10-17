@@ -8,9 +8,9 @@ import (
 	"reflect"
 
 	"errors"
+	"github.com/nextpart/pulumi-powerdns-native/sdk/go/powerdns/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
-	"internal"
 )
 
 type Zone struct {
@@ -119,6 +119,68 @@ func (i *Zone) ToOutput(ctx context.Context) pulumix.Output[*Zone] {
 	}
 }
 
+// ZoneArrayInput is an input type that accepts ZoneArray and ZoneArrayOutput values.
+// You can construct a concrete instance of `ZoneArrayInput` via:
+//
+//	ZoneArray{ ZoneArgs{...} }
+type ZoneArrayInput interface {
+	pulumi.Input
+
+	ToZoneArrayOutput() ZoneArrayOutput
+	ToZoneArrayOutputWithContext(context.Context) ZoneArrayOutput
+}
+
+type ZoneArray []ZoneInput
+
+func (ZoneArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]*Zone)(nil)).Elem()
+}
+
+func (i ZoneArray) ToZoneArrayOutput() ZoneArrayOutput {
+	return i.ToZoneArrayOutputWithContext(context.Background())
+}
+
+func (i ZoneArray) ToZoneArrayOutputWithContext(ctx context.Context) ZoneArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ZoneArrayOutput)
+}
+
+func (i ZoneArray) ToOutput(ctx context.Context) pulumix.Output[[]*Zone] {
+	return pulumix.Output[[]*Zone]{
+		OutputState: i.ToZoneArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+// ZoneMapInput is an input type that accepts ZoneMap and ZoneMapOutput values.
+// You can construct a concrete instance of `ZoneMapInput` via:
+//
+//	ZoneMap{ "key": ZoneArgs{...} }
+type ZoneMapInput interface {
+	pulumi.Input
+
+	ToZoneMapOutput() ZoneMapOutput
+	ToZoneMapOutputWithContext(context.Context) ZoneMapOutput
+}
+
+type ZoneMap map[string]ZoneInput
+
+func (ZoneMap) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]*Zone)(nil)).Elem()
+}
+
+func (i ZoneMap) ToZoneMapOutput() ZoneMapOutput {
+	return i.ToZoneMapOutputWithContext(context.Background())
+}
+
+func (i ZoneMap) ToZoneMapOutputWithContext(ctx context.Context) ZoneMapOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ZoneMapOutput)
+}
+
+func (i ZoneMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*Zone] {
+	return pulumix.Output[map[string]*Zone]{
+		OutputState: i.ToZoneMapOutputWithContext(ctx).OutputState,
+	}
+}
+
 type ZoneOutput struct{ *pulumi.OutputState }
 
 func (ZoneOutput) ElementType() reflect.Type {
@@ -171,7 +233,63 @@ func (o ZoneOutput) ZoneId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Zone) pulumi.StringOutput { return v.ZoneId }).(pulumi.StringOutput)
 }
 
+type ZoneArrayOutput struct{ *pulumi.OutputState }
+
+func (ZoneArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]*Zone)(nil)).Elem()
+}
+
+func (o ZoneArrayOutput) ToZoneArrayOutput() ZoneArrayOutput {
+	return o
+}
+
+func (o ZoneArrayOutput) ToZoneArrayOutputWithContext(ctx context.Context) ZoneArrayOutput {
+	return o
+}
+
+func (o ZoneArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*Zone] {
+	return pulumix.Output[[]*Zone]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o ZoneArrayOutput) Index(i pulumi.IntInput) ZoneOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *Zone {
+		return vs[0].([]*Zone)[vs[1].(int)]
+	}).(ZoneOutput)
+}
+
+type ZoneMapOutput struct{ *pulumi.OutputState }
+
+func (ZoneMapOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]*Zone)(nil)).Elem()
+}
+
+func (o ZoneMapOutput) ToZoneMapOutput() ZoneMapOutput {
+	return o
+}
+
+func (o ZoneMapOutput) ToZoneMapOutputWithContext(ctx context.Context) ZoneMapOutput {
+	return o
+}
+
+func (o ZoneMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*Zone] {
+	return pulumix.Output[map[string]*Zone]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o ZoneMapOutput) MapIndex(k pulumi.StringInput) ZoneOutput {
+	return pulumi.All(o, k).ApplyT(func(vs []interface{}) *Zone {
+		return vs[0].(map[string]*Zone)[vs[1].(string)]
+	}).(ZoneOutput)
+}
+
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*ZoneInput)(nil)).Elem(), &Zone{})
+	pulumi.RegisterInputType(reflect.TypeOf((*ZoneArrayInput)(nil)).Elem(), ZoneArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*ZoneMapInput)(nil)).Elem(), ZoneMap{})
 	pulumi.RegisterOutputType(ZoneOutput{})
+	pulumi.RegisterOutputType(ZoneArrayOutput{})
+	pulumi.RegisterOutputType(ZoneMapOutput{})
 }
