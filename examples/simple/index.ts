@@ -1,4 +1,4 @@
-import * as powerdns from "@pulumi/powerdns";
+import * as powerdns from "@nextpart/powerdns";
 
 const zone = new powerdns.Zone("foobar", { name: "foobar.com.", kind: "master", account: "admin"});
 
