@@ -33,7 +33,7 @@ var _ = (infer.CustomCheck[*Config])((*Config)(nil))
 // workaround for https://github.com/pulumi/pulumi-go-provider/issues/110
 func (c *Config) Check(ctx p.Context, name string, oldInputs, newInputs resource.PropertyMap) (*Config, []p.CheckFailure, error) {
 	c.ApiEndpoint = newInputs["apiEndpoint"].StringValue()
-	c.ApiKey = newInputs["ApiKey"].StringValue()
+	c.ApiKey = newInputs["apiKey"].StringValue()
 	if newInputs["insecure"].IsBool() {
 		insecure := newInputs["insecure"].BoolValue()
 		c.Insecure = &insecure
