@@ -51,7 +51,7 @@ func Provider() p.Provider {
 			Homepage:          "https://pulumi.com",
 			License:           "MPL-2.0",
 			Repository:        "https://github.com/nextpart/pulumi-powerdns-native",
-			PluginDownloadURL: "github://api.github.com/nextpart",
+			PluginDownloadURL: "github://api.github.com/nextpart/pulumi-powerdns-native",
 			Publisher:         "Nextpart",
 			LogoURL:           "https://raw.githubusercontent.com/nextpart/pulumi-powerdns-native/master/assets/logo.png",
 			// This contains language specific details for generating the provider's SDKs
