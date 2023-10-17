@@ -22,6 +22,6 @@
     "pulumi": {
         "resource": true,
         "name": "powerdns",
-        "server": "github://api.github.com/nextpart"
+        "server": "github://api.github.com/nextpart/pulumi-powerdns-native"
     }
 }
