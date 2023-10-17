@@ -50,7 +50,7 @@ dotnet add package Pulumi.Aci
 
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
-import * as powerdns from "@pulumi/powerdns";
+import * as powerdns from "@nextpart/powerdns";
 
 const zone = new powerdns.Zone("foobar", { name: "foobar.com.", kind: "master", account: "admin"});
 
@@ -66,7 +66,11 @@ const record2 = new powerdns.Record("foo", {
 ### Python
 
 ```python
-import pulumi_powerdns as aci
+import nextpart_powerdns as pdns
+
+
+
+
 ```
 
 ### Go
@@ -80,7 +84,25 @@ import (
 
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
-		return nil
+        _, err := pdns.NewZone(ctx, "foobar.com", &pdns.ZoneArgs{
+            Name:    pulumi.String("foobar.com."),
+            Kind:    pulumi.String("master"),
+            Account: pulumi.String("admin"),
+        })
+
+        if err != nil {
+            return err
+        }
+
+		_, err = pdns.NewRecord(ctx, "test.foobar.com.", &pdns.RecordArgs{
+			Name: pulumi.String("test.foobar.com."),
+			Zone: pulumi.String("foobar.com."),
+			Type: pulumi.String("A"),
+			Records: pulumi.ToStringArray([]string{"10.0.0.1", "10.0.0.2", "10.0.3.0"}),
+			Ttl: pulumi.Int(300),
+
+		})
+		return err
 	})
 }
 ```
@@ -130,7 +152,7 @@ This will:
    
 ```bash
 $ cd examples/simple
-$ yarn link @pulumi/powerdns
+$ yarn link @nextpart/powerdns
 $ yarn install
 $ pulumi stack init test
 $ pulumi up
