@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Authors>Nextpart</Authors>
-    <Company>Nextpart</Company>
+    <Authors>NEXTPART Security Intelligence GmbH</Authors>
+    <Company>NEXTPART Security Intelligence GmbH</Company>
     <Description>The Pulumi PowerDNS provider provides resources to interact with a PowerDNS Authoritative DNS Server.</Description>
     <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://pulumi.com</PackageProjectUrl>

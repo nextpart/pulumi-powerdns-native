@@ -2,6 +2,8 @@
     "name": "@nextpart/powerdns",
     "version": "${VERSION}",
     "keywords": [
+        "category/infrastructure",
+        "kind/native",
         "pulumi",
         "powerdns",
         "dns"

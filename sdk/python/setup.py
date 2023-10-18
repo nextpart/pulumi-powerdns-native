@@ -23,7 +23,7 @@ setup(name='pulumi_powerdns',
       description="The Pulumi PowerDNS provider provides resources to interact with a PowerDNS Authoritative DNS Server.",
       long_description=readme(),
       long_description_content_type='text/markdown',
-      keywords='pulumi powerdns dns',
+      keywords='category/infrastructure kind/native pulumi powerdns dns',
       url='https://pulumi.com',
       project_urls={
           'Repository': 'https://github.com/nextpart/pulumi-powerdns-native'
