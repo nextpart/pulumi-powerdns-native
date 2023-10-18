@@ -1,0 +1,308 @@
+{
+    "config": {
+        "defaults": [
+            "",
+            "url",
+            "key"
+        ],
+        "variables": {
+            "insecure": {
+                "description": "Explicitly allow the provider to perform \"insecure\" SSL requests. If omitted, default value is \"false\"",
+                "type": "boolean"
+            },
+            "key": {
+                "default": "",
+                "defaultInfo": {
+                    "environment": [
+                        "POWERDNS_KEY"
+                    ]
+                },
+                "description": "The access key for API operations",
+                "secret": true,
+                "type": "string"
+            },
+            "logging": {
+                "type": "boolean"
+            },
+            "url": {
+                "default": "",
+                "defaultInfo": {
+                    "environment": [
+                        "POWERDNS_URL"
+                    ]
+                },
+                "description": "The api endpoint of the powerdns server",
+                "type": "string"
+            },
+            "": {
+                "type": "string"
+            }
+        }
+    },
+    "description": "The Pulumi PowerDNS provider provides resources to interact with a PowerDNS Authoritative DNS Server.",
+    "displayName": "PowerDNS",
+    "homepage": "https://pulumi.com",
+    "keywords": [
+        "pulumi",
+        "powerdns",
+        "dns"
+    ],
+    "language": {
+        "csharp": {
+            "packageReferences": {
+                "Pulumi": "3.*"
+            }
+        },
+        "go": {
+            "generateResourceContainerTypes": true,
+            "importBasePath": "github.com/nextpart/pulumi-powerdns-native/sdk/go/powerdns"
+        },
+        "java": {
+            "buildFiles": "gradle",
+            "dependencies": {
+                "com.google.code.findbugs:jsr305": "3.0.2",
+                "com.google.code.gson:gson": "2.8.9",
+                "com.pulumi:pulumi": "0.6.0"
+            },
+            "gradleNexusPublishPlugin": "1.1.0"
+        },
+        "nodejs": {
+            "dependencies": {
+                "@pulumi/pulumi": "^3.0.0"
+            },
+            "packageName": "@nextpart/powerdns"
+        },
+        "python": {
+            "requires": {
+                "pulumi": ">=3.0.0,<4.0.0"
+            }
+        }
+    },
+    "license": "MPL-2.0",
+    "logoUrl": "https://raw.githubusercontent.com/nextpart/pulumi-powerdns-native/master/assets/logo.png",
+    "name": "powerdns",
+    "pluginDownloadURL": "github://api.github.com/nextpart/pulumi-powerdns-native",
+    "provider": {
+        "inputProperties": {
+            "insecure": {
+                "description": "Explicitly allow the provider to perform \"insecure\" SSL requests. If omitted, default value is \"false\"",
+                "type": "boolean"
+            },
+            "key": {
+                "default": "",
+                "defaultInfo": {
+                    "environment": [
+                        "POWERDNS_KEY"
+                    ]
+                },
+                "description": "The access key for API operations",
+                "secret": true,
+                "type": "string"
+            },
+            "logging": {
+                "type": "boolean"
+            },
+            "url": {
+                "default": "",
+                "defaultInfo": {
+                    "environment": [
+                        "POWERDNS_URL"
+                    ]
+                },
+                "description": "The api endpoint of the powerdns server",
+                "type": "string"
+            },
+            "": {
+                "type": "string"
+            }
+        },
+        "properties": {
+            "insecure": {
+                "description": "Explicitly allow the provider to perform \"insecure\" SSL requests. If omitted, default value is \"false\"",
+                "type": "boolean"
+            },
+            "key": {
+                "default": "",
+                "defaultInfo": {
+                    "environment": [
+                        "POWERDNS_KEY"
+                    ]
+                },
+                "description": "The access key for API operations",
+                "secret": true,
+                "type": "string"
+            },
+            "logging": {
+                "type": "boolean"
+            },
+            "url": {
+                "default": "",
+                "defaultInfo": {
+                    "environment": [
+                        "POWERDNS_URL"
+                    ]
+                },
+                "description": "The api endpoint of the powerdns server",
+                "type": "string"
+            },
+            "": {
+                "type": "string"
+            }
+        },
+        "required": [
+            "",
+            "url",
+            "key"
+        ],
+        "requiredInputs": [
+            "",
+            "url",
+            "key"
+        ]
+    },
+    "publisher": "Nextpart",
+    "repository": "https://github.com/nextpart/pulumi-powerdns-native",
+    "resources": {
+        "powerdns:index:Record": {
+            "description": "Test",
+            "inputProperties": {
+                "name": {
+                    "type": "string"
+                },
+                "records": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "setptr": {
+                    "type": "boolean"
+                },
+                "ttl": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "zone": {
+                    "type": "string"
+                }
+            },
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "recId": {
+                    "type": "string"
+                },
+                "records": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "result": {
+                    "type": "string"
+                },
+                "setptr": {
+                    "type": "boolean"
+                },
+                "ttl": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "zone": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "recId",
+                "zone",
+                "name",
+                "type",
+                "ttl",
+                "records",
+                "result"
+            ],
+            "requiredInputs": [
+                "zone",
+                "name",
+                "type",
+                "ttl",
+                "records"
+            ]
+        },
+        "powerdns:index:Zone": {
+            "inputProperties": {
+                "account": {
+                    "type": "string"
+                },
+                "kind": {
+                    "type": "string"
+                },
+                "masters": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "nameservers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "soaEditAPI": {
+                    "type": "string"
+                }
+            },
+            "properties": {
+                "account": {
+                    "type": "string"
+                },
+                "kind": {
+                    "type": "string"
+                },
+                "masters": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "nameservers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "result": {
+                    "type": "string"
+                },
+                "soaEditAPI": {
+                    "type": "string"
+                },
+                "zoneId": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "zoneId",
+                "name",
+                "kind",
+                "result"
+            ],
+            "requiredInputs": [
+                "name",
+                "kind"
+            ]
+        }
+    }
+}

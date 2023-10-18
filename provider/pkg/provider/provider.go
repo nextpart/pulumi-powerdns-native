@@ -23,10 +23,14 @@
 package provider
 
 import (
+	"strings"
+
+	"github.com/blang/semver"
 	p "github.com/pulumi/pulumi-go-provider"
 	"github.com/pulumi/pulumi-go-provider/infer"
-	"github.com/pulumi/pulumi/sdk/v3/go/common/tokens"
+	"github.com/pulumi/pulumi-go-provider/integration"
 	"github.com/pulumi/pulumi-go-provider/middleware/schema"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/tokens"
 
 	pdns "github.com/nextpart/pulumi-powerdns-native/provider/pkg/provider/powerdns"
 )
@@ -96,4 +100,11 @@ func Provider() p.Provider {
 		},
 		Config: infer.Config[*pdns.Config](),
 	})
+}
+
+func Schema(version string) (string, error) {
+	version = strings.TrimPrefix(version, "v")
+	s, err := integration.NewServer("powerdns", semver.MustParse(version), Provider()).
+		GetSchema(p.GetSchemaRequest{})
+	return s.Schema, err
 }

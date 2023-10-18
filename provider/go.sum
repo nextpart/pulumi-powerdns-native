@@ -136,6 +136,8 @@ github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZb
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/pulumi/pulumi-go-provider v0.12.2 h1:uFDGSjLIhMHzK31WeC+9jH3s/4Nh8eVmBW7DTuObGwY=
 github.com/pulumi/pulumi-go-provider v0.12.2/go.mod h1:EOQY/y4d2A8G/0CjkxlFBbrmLoLFkPf6WCZIiyBsP1M=
+github.com/pulumi/pulumi-go-provider/integration v0.10.0 h1:GHesnrrvkboSjkZpC+qRwjkXBp5d+fSXqlIO92zQxvc=
+github.com/pulumi/pulumi-go-provider/integration v0.10.0/go.mod h1:qAbKHpPzANFKOyjiQ0CzdgJh4DtM0gtujKhO7+l3/+w=
 github.com/pulumi/pulumi/pkg/v3 v3.79.0 h1:Rzrv7pmn51D7r41ua/wtQxhSt0ZM0bx4JrXvifXmSx4=
 github.com/pulumi/pulumi/pkg/v3 v3.79.0/go.mod h1:VHC3YWL53JMEbsuq6nj3M93G9TiB1L6aVxjepjnJKTY=
 github.com/pulumi/pulumi/sdk/v3 v3.79.0 h1:GJ46WDwJ78jQ9qJW0nI1WdnypjCNkRQG9rVymw0go9A=

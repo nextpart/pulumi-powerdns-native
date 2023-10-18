@@ -71,12 +71,12 @@ const record2 = new powerdns.Record("foo", {
 import pulumi
 import pulumi_powerdns as pdns
 
-test = pdns.Zone("test", name="fifo.com.", kind="master", account="admin")
+test = pdns.Zone("test", name="foobar.com.", kind="master", account="admin")
 
 record = pdns.Record(
     "record",
-    zone="fifo.com.",
-    name="test.fifo.com.",
+    zone="foobar.com.",
+    name="test.foobar.com.",
     type="A",
     records=["10.0.0.0", "10.0.0.1"],
     ttl=300,
@@ -120,15 +120,34 @@ func main() {
 ### .NET
 
 ```csharp
+using System.Collections.Generic;
 using Pulumi;
 using Pulumi.Powerdns;
 
-class Powerdns : Stack
+return await Deployment.RunAsync(() =>
 {
-    public Powerdns()
-    {
-    }
-}
+   // Add your resources here
+   // e.g. var resource = new Resource("name", new ResourceArgs { });
+   var zone = new Zone("foobar", new ZoneArgs {
+      Name = "foobar.com.",
+      Kind = "master",
+      Account = "admin",
+   });
+
+   var record = new Record("record", new RecordArgs {
+      Name = "test.foobar.com.",
+      Zone = zone.Name,
+      Type = "A",
+      Records = new List<string>(){"10.0.0.0", "10.0.0.2"},
+      Ttl = 300,
+   });
+
+   // Export outputs here
+   return new Dictionary<string, object?>
+   {
+      ["outputKey"] = "outputValue"
+   };
+});
 ```
 
 ### Configuration
