@@ -14,21 +14,21 @@ __all__ = ['ProviderArgs', 'Provider']
 @pulumi.input_type
 class ProviderArgs:
     def __init__(__self__, *,
-                 api_endpoint: pulumi.Input[str],
-                 api_key: pulumi.Input[str],
+                 key: Optional[pulumi.Input[str]] = None,
+                 url: Optional[pulumi.Input[str]] = None,
                  version: pulumi.Input[str],
                  insecure: Optional[pulumi.Input[bool]] = None,
                  logging: Optional[pulumi.Input[bool]] = None):
         """
         The set of arguments for constructing a Provider resource.
-        :param pulumi.Input[str] api_endpoint: The api endpoint of the powerdns server
-        :param pulumi.Input[str] api_key: The access key for API operations
+        :param pulumi.Input[str] key: The access key for API operations
+        :param pulumi.Input[str] url: The api endpoint of the powerdns server
         :param pulumi.Input[bool] insecure: Explicitly allow the provider to perform "insecure" SSL requests. If omitted, default value is "false"
         """
         ProviderArgs._configure(
             lambda key, value: pulumi.set(__self__, key, value),
-            api_endpoint=api_endpoint,
-            api_key=api_key,
+            key=key,
+            url=url,
             version=version,
             insecure=insecure,
             logging=logging,
@@ -36,14 +36,18 @@ class ProviderArgs:
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
-             api_endpoint: pulumi.Input[str],
-             api_key: pulumi.Input[str],
+             key: Optional[pulumi.Input[str]] = None,
+             url: Optional[pulumi.Input[str]] = None,
              version: pulumi.Input[str],
              insecure: Optional[pulumi.Input[bool]] = None,
              logging: Optional[pulumi.Input[bool]] = None,
              opts: Optional[pulumi.ResourceOptions]=None):
-        _setter("api_endpoint", api_endpoint)
-        _setter("api_key", api_key)
+        if key is None:
+            key = (_utilities.get_env('POWERDNS_KEY') or '')
+        _setter("key", key)
+        if url is None:
+            url = (_utilities.get_env('POWERDNS_URL') or '')
+        _setter("url", url)
         _setter("version", version)
         if insecure is not None:
             _setter("insecure", insecure)
@@ -51,28 +55,28 @@ class ProviderArgs:
             _setter("logging", logging)
 
     @property
-    @pulumi.getter(name="apiEndpoint")
-    def api_endpoint(self) -> pulumi.Input[str]:
-        """
-        The api endpoint of the powerdns server
-        """
-        return pulumi.get(self, "api_endpoint")
-
-    @api_endpoint.setter
-    def api_endpoint(self, value: pulumi.Input[str]):
-        pulumi.set(self, "api_endpoint", value)
-
-    @property
-    @pulumi.getter(name="apiKey")
-    def api_key(self) -> pulumi.Input[str]:
+    @pulumi.getter
+    def key(self) -> pulumi.Input[str]:
         """
         The access key for API operations
         """
-        return pulumi.get(self, "api_key")
+        return pulumi.get(self, "key")
 
-    @api_key.setter
-    def api_key(self, value: pulumi.Input[str]):
-        pulumi.set(self, "api_key", value)
+    @key.setter
+    def key(self, value: pulumi.Input[str]):
+        pulumi.set(self, "key", value)
+
+    @property
+    @pulumi.getter
+    def url(self) -> pulumi.Input[str]:
+        """
+        The api endpoint of the powerdns server
+        """
+        return pulumi.get(self, "url")
+
+    @url.setter
+    def url(self, value: pulumi.Input[str]):
+        pulumi.set(self, "url", value)
 
     @property
     @pulumi.getter
@@ -110,19 +114,19 @@ class Provider(pulumi.ProviderResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 api_endpoint: Optional[pulumi.Input[str]] = None,
-                 api_key: Optional[pulumi.Input[str]] = None,
                  insecure: Optional[pulumi.Input[bool]] = None,
+                 key: Optional[pulumi.Input[str]] = None,
                  logging: Optional[pulumi.Input[bool]] = None,
+                 url: Optional[pulumi.Input[str]] = None,
                  version: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
         Create a Powerdns resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[str] api_endpoint: The api endpoint of the powerdns server
-        :param pulumi.Input[str] api_key: The access key for API operations
         :param pulumi.Input[bool] insecure: Explicitly allow the provider to perform "insecure" SSL requests. If omitted, default value is "false"
+        :param pulumi.Input[str] key: The access key for API operations
+        :param pulumi.Input[str] url: The api endpoint of the powerdns server
         """
         ...
     @overload
@@ -151,10 +155,10 @@ class Provider(pulumi.ProviderResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 api_endpoint: Optional[pulumi.Input[str]] = None,
-                 api_key: Optional[pulumi.Input[str]] = None,
                  insecure: Optional[pulumi.Input[bool]] = None,
+                 key: Optional[pulumi.Input[str]] = None,
                  logging: Optional[pulumi.Input[bool]] = None,
+                 url: Optional[pulumi.Input[str]] = None,
                  version: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -165,18 +169,22 @@ class Provider(pulumi.ProviderResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = ProviderArgs.__new__(ProviderArgs)
 
-            if api_endpoint is None and not opts.urn:
-                raise TypeError("Missing required property 'api_endpoint'")
-            __props__.__dict__["api_endpoint"] = api_endpoint
-            if api_key is None and not opts.urn:
-                raise TypeError("Missing required property 'api_key'")
-            __props__.__dict__["api_key"] = None if api_key is None else pulumi.Output.secret(api_key)
             __props__.__dict__["insecure"] = pulumi.Output.from_input(insecure).apply(pulumi.runtime.to_json) if insecure is not None else None
+            if key is None:
+                key = (_utilities.get_env('POWERDNS_KEY') or '')
+            if key is None and not opts.urn:
+                raise TypeError("Missing required property 'key'")
+            __props__.__dict__["key"] = None if key is None else pulumi.Output.secret(key)
             __props__.__dict__["logging"] = pulumi.Output.from_input(logging).apply(pulumi.runtime.to_json) if logging is not None else None
+            if url is None:
+                url = (_utilities.get_env('POWERDNS_URL') or '')
+            if url is None and not opts.urn:
+                raise TypeError("Missing required property 'url'")
+            __props__.__dict__["url"] = url
             if version is None and not opts.urn:
                 raise TypeError("Missing required property 'version'")
             __props__.__dict__["version"] = version
-        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["apiKey"])
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["key"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(Provider, __self__).__init__(
             'powerdns',
@@ -185,20 +193,20 @@ class Provider(pulumi.ProviderResource):
             opts)
 
     @property
-    @pulumi.getter(name="apiEndpoint")
-    def api_endpoint(self) -> pulumi.Output[str]:
-        """
-        The api endpoint of the powerdns server
-        """
-        return pulumi.get(self, "api_endpoint")
-
-    @property
-    @pulumi.getter(name="apiKey")
-    def api_key(self) -> pulumi.Output[str]:
+    @pulumi.getter
+    def key(self) -> pulumi.Output[str]:
         """
         The access key for API operations
         """
-        return pulumi.get(self, "api_key")
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def url(self) -> pulumi.Output[str]:
+        """
+        The api endpoint of the powerdns server
+        """
+        return pulumi.get(self, "url")
 
     @property
     @pulumi.getter

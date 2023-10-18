@@ -32,26 +32,6 @@ namespace Pulumi.Powerdns
 
         private static readonly global::Pulumi.Config __config = new global::Pulumi.Config("powerdns");
 
-        private static readonly __Value<string?> _apiEndpoint = new __Value<string?>(() => __config.Get("apiEndpoint"));
-        /// <summary>
-        /// The api endpoint of the powerdns server
-        /// </summary>
-        public static string? ApiEndpoint
-        {
-            get => _apiEndpoint.Get();
-            set => _apiEndpoint.Set(value);
-        }
-
-        private static readonly __Value<string?> _apiKey = new __Value<string?>(() => __config.Get("apiKey"));
-        /// <summary>
-        /// The access key for API operations
-        /// </summary>
-        public static string? ApiKey
-        {
-            get => _apiKey.Get();
-            set => _apiKey.Set(value);
-        }
-
         private static readonly __Value<bool?> _insecure = new __Value<bool?>(() => __config.GetBoolean("insecure"));
         /// <summary>
         /// Explicitly allow the provider to perform "insecure" SSL requests. If omitted, default value is "false"
@@ -62,11 +42,31 @@ namespace Pulumi.Powerdns
             set => _insecure.Set(value);
         }
 
+        private static readonly __Value<string?> _key = new __Value<string?>(() => __config.Get("key") ?? Utilities.GetEnv("POWERDNS_KEY") ?? "");
+        /// <summary>
+        /// The access key for API operations
+        /// </summary>
+        public static string? Key
+        {
+            get => _key.Get();
+            set => _key.Set(value);
+        }
+
         private static readonly __Value<bool?> _logging = new __Value<bool?>(() => __config.GetBoolean("logging"));
         public static bool? Logging
         {
             get => _logging.Get();
             set => _logging.Set(value);
+        }
+
+        private static readonly __Value<string?> _url = new __Value<string?>(() => __config.Get("url") ?? Utilities.GetEnv("POWERDNS_URL") ?? "");
+        /// <summary>
+        /// The api endpoint of the powerdns server
+        /// </summary>
+        public static string? Url
+        {
+            get => _url.Get();
+            set => _url.Set(value);
         }
 
         private static readonly __Value<string?> _version = new __Value<string?>(() => __config.Get("version"));

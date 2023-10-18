@@ -1,6 +1,8 @@
 # Pulumi PowerDNS Native Provider
 
-This repository is a contains a pulumi native provider for the PowerDNS Authoritative Nameserver. This allow the creation of zones and records. 
+This repository is a contains a pulumi native provider for the PowerDNS Authoritative Nameserver. This allow the creation of zones and records.
+
+> **NOTE:** This provider is experimental. Not save for production use.
 
 ## Installing
 
@@ -25,7 +27,7 @@ yarn add @nextpart/powerdns
 To use from Python, install using `pip`:
 
 ```bash
-pip install pulumi_powerdns
+pip install pulumi-powerdns
 ```
 
 ### Go
@@ -66,11 +68,19 @@ const record2 = new powerdns.Record("foo", {
 ### Python
 
 ```python
-import nextpart_powerdns as pdns
+import pulumi
+import pulumi_powerdns as pdns
 
+test = pdns.Zone("test", name="fifo.com.", kind="master", account="admin")
 
-
-
+record = pdns.Record(
+    "record",
+    zone="fifo.com.",
+    name="test.fifo.com.",
+    type="A",
+    records=["10.0.0.0", "10.0.0.1"],
+    ttl=300,
+)
 ```
 
 ### Go
@@ -121,6 +131,11 @@ class Powerdns : Stack
 }
 ```
 
+### Configuration
+
+The following configuration points are available for the `powerdns` provider:
+* `powerdns:url` (environment: `POWERDNS_URL`) - URL of the powerdns api endpoint
+* `powerdns:key` (environment: `POWERDNS_KEY`) - The API key for the powerdns api endpoint
 
 ## Development
 ### Prerequisites

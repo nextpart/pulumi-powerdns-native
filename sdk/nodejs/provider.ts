@@ -20,13 +20,13 @@ export class Provider extends pulumi.ProviderResource {
     }
 
     /**
-     * The api endpoint of the powerdns server
-     */
-    public readonly apiEndpoint!: pulumi.Output<string>;
-    /**
      * The access key for API operations
      */
-    public readonly apiKey!: pulumi.Output<string>;
+    public readonly key!: pulumi.Output<string>;
+    /**
+     * The api endpoint of the powerdns server
+     */
+    public readonly url!: pulumi.Output<string>;
     public readonly version!: pulumi.Output<string>;
 
     /**
@@ -40,23 +40,23 @@ export class Provider extends pulumi.ProviderResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         {
-            if ((!args || args.apiEndpoint === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'apiEndpoint'");
+            if ((!args || args.key === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'key'");
             }
-            if ((!args || args.apiKey === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'apiKey'");
+            if ((!args || args.url === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'url'");
             }
             if ((!args || args.version === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'version'");
             }
-            resourceInputs["apiEndpoint"] = args ? args.apiEndpoint : undefined;
-            resourceInputs["apiKey"] = args?.apiKey ? pulumi.secret(args.apiKey) : undefined;
             resourceInputs["insecure"] = pulumi.output(args ? args.insecure : undefined).apply(JSON.stringify);
+            resourceInputs["key"] = (args?.key ? pulumi.secret(args.key) : undefined) ?? (utilities.getEnv("POWERDNS_KEY") || "");
             resourceInputs["logging"] = pulumi.output(args ? args.logging : undefined).apply(JSON.stringify);
+            resourceInputs["url"] = (args ? args.url : undefined) ?? (utilities.getEnv("POWERDNS_URL") || "");
             resourceInputs["version"] = args ? args.version : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["apiKey"] };
+        const secretOpts = { additionalSecretOutputs: ["key"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(Provider.__pulumiType, name, resourceInputs, opts);
     }
@@ -67,17 +67,17 @@ export class Provider extends pulumi.ProviderResource {
  */
 export interface ProviderArgs {
     /**
-     * The api endpoint of the powerdns server
-     */
-    apiEndpoint: pulumi.Input<string>;
-    /**
-     * The access key for API operations
-     */
-    apiKey: pulumi.Input<string>;
-    /**
      * Explicitly allow the provider to perform "insecure" SSL requests. If omitted, default value is "false"
      */
     insecure?: pulumi.Input<boolean>;
+    /**
+     * The access key for API operations
+     */
+    key: pulumi.Input<string>;
     logging?: pulumi.Input<boolean>;
+    /**
+     * The api endpoint of the powerdns server
+     */
+    url: pulumi.Input<string>;
     version: pulumi.Input<string>;
 }

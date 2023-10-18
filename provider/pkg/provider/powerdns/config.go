@@ -11,8 +11,8 @@ import (
 
 type Config struct {
 	Version			string   `pulumi:"version"`
-	ApiEndpoint     string   `pulumi:"apiEndpoint"`
-	ApiKey 			string   `pulumi:"apiKey" provider:"secret"`
+	Url     		string   `pulumi:"url"`
+	Key 			string   `pulumi:"key" provider:"secret"`
 	Insecure 	   	*bool 	 `pulumi:"insecure,optional"`
 	Logging  	   	*bool    `pulumi:"logging,optional"`
 	Client         	*PDNSClient
@@ -21,10 +21,11 @@ type Config struct {
 var _ = (infer.Annotated)((*Config)(nil))
 
 func (c *Config) Annotate(a infer.Annotator) {
-	a.Describe(&c.ApiEndpoint, "The api endpoint of the powerdns server")
-	a.Describe(&c.ApiKey, "The access key for API operations")
+	a.Describe(&c.Url, "The api endpoint of the powerdns server")
+	a.Describe(&c.Key, "The access key for API operations")
 	a.Describe(&c.Insecure, `Explicitly allow the provider to perform "insecure" SSL requests. If omitted, default value is "false"`)
-	
+	a.SetDefault(&c.Url, "", "POWERDNS_URL")
+	a.SetDefault(&c.Key, "", "POWERDNS_KEY")
 	//a.SetDefault(&c.Insecure, true, "API_INSECURE")
 }
 
@@ -32,8 +33,25 @@ var _ = (infer.CustomCheck[*Config])((*Config)(nil))
 
 // workaround for https://github.com/pulumi/pulumi-go-provider/issues/110
 func (c *Config) Check(ctx p.Context, name string, oldInputs, newInputs resource.PropertyMap) (*Config, []p.CheckFailure, error) {
-	c.ApiEndpoint = newInputs["apiEndpoint"].StringValue()
-	c.ApiKey = newInputs["apiKey"].StringValue()
+	failures := []p.CheckFailure{}
+	if newInputs["url"].IsString() {
+		c.Url = newInputs["url"].StringValue()
+	} else {
+		failures = append(failures, p.CheckFailure{
+			Property: "url",
+			Reason:  "Field does not exist or is empty",
+		})
+	}
+
+	if newInputs["key"].IsString() {
+		c.Key = newInputs["key"].StringValue()
+	} else {
+		failures = append(failures, p.CheckFailure{
+			Property: "key",
+			Reason:  "Field does not exist or is empty",
+		})
+	}
+
 	if newInputs["insecure"].IsBool() {
 		insecure := newInputs["insecure"].BoolValue()
 		c.Insecure = &insecure
@@ -43,7 +61,7 @@ func (c *Config) Check(ctx p.Context, name string, oldInputs, newInputs resource
 		c.Logging = &logging
 	}
 
-	return c, []p.CheckFailure{}, nil
+	return c, failures, nil
 }
 
 var _ = (infer.CustomConfigure)((*Config)(nil))
@@ -61,11 +79,12 @@ func (c *Config) Configure(ctx p.Context) error {
 		insecure = *c.Insecure
 	}
 
+	// TODO: Create insecure tls context when filed is enabled
 	if insecure {
-		client, _ := NewClient(c.ApiEndpoint, c.ApiKey, nil, true, "2", 10)
+		client, _ := NewClient(c.Url, c.Key, nil, true, "2", 10)
 		c.Client = client
 	} else {
-		client, _ := NewClient(c.ApiEndpoint, c.ApiKey, nil, true, "2", 10)
+		client, _ := NewClient(c.Url, c.Key, nil, true, "2", 10)
 		c.Client = client
 	}
 

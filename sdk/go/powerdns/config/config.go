@@ -11,22 +11,38 @@ import (
 
 var _ = internal.GetEnvOrDefault
 
-// The api endpoint of the powerdns server
-func GetApiEndpoint(ctx *pulumi.Context) string {
-	return config.Get(ctx, "powerdns:apiEndpoint")
-}
-
-// The access key for API operations
-func GetApiKey(ctx *pulumi.Context) string {
-	return config.Get(ctx, "powerdns:apiKey")
-}
-
 // Explicitly allow the provider to perform "insecure" SSL requests. If omitted, default value is "false"
 func GetInsecure(ctx *pulumi.Context) bool {
 	return config.GetBool(ctx, "powerdns:insecure")
 }
+
+// The access key for API operations
+func GetKey(ctx *pulumi.Context) string {
+	v, err := config.Try(ctx, "powerdns:key")
+	if err == nil {
+		return v
+	}
+	var value string
+	if d := internal.GetEnvOrDefault("", nil, "POWERDNS_KEY"); d != nil {
+		value = d.(string)
+	}
+	return value
+}
 func GetLogging(ctx *pulumi.Context) bool {
 	return config.GetBool(ctx, "powerdns:logging")
+}
+
+// The api endpoint of the powerdns server
+func GetUrl(ctx *pulumi.Context) string {
+	v, err := config.Try(ctx, "powerdns:url")
+	if err == nil {
+		return v
+	}
+	var value string
+	if d := internal.GetEnvOrDefault("", nil, "POWERDNS_URL"); d != nil {
+		value = d.(string)
+	}
+	return value
 }
 func GetVersion(ctx *pulumi.Context) string {
 	return config.Get(ctx, "powerdns:version")

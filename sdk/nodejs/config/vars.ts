@@ -8,28 +8,6 @@ declare var exports: any;
 const __config = new pulumi.Config("powerdns");
 
 /**
- * The api endpoint of the powerdns server
- */
-export declare const apiEndpoint: string | undefined;
-Object.defineProperty(exports, "apiEndpoint", {
-    get() {
-        return __config.get("apiEndpoint");
-    },
-    enumerable: true,
-});
-
-/**
- * The access key for API operations
- */
-export declare const apiKey: string | undefined;
-Object.defineProperty(exports, "apiKey", {
-    get() {
-        return __config.get("apiKey");
-    },
-    enumerable: true,
-});
-
-/**
  * Explicitly allow the provider to perform "insecure" SSL requests. If omitted, default value is "false"
  */
 export declare const insecure: boolean | undefined;
@@ -40,10 +18,32 @@ Object.defineProperty(exports, "insecure", {
     enumerable: true,
 });
 
+/**
+ * The access key for API operations
+ */
+export declare const key: string;
+Object.defineProperty(exports, "key", {
+    get() {
+        return __config.get("key") ?? (utilities.getEnv("POWERDNS_KEY") || "");
+    },
+    enumerable: true,
+});
+
 export declare const logging: boolean | undefined;
 Object.defineProperty(exports, "logging", {
     get() {
         return __config.getObject<boolean>("logging");
+    },
+    enumerable: true,
+});
+
+/**
+ * The api endpoint of the powerdns server
+ */
+export declare const url: string;
+Object.defineProperty(exports, "url", {
+    get() {
+        return __config.get("url") ?? (utilities.getEnv("POWERDNS_URL") || "");
     },
     enumerable: true,
 });

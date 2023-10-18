@@ -16,20 +16,6 @@ __config__ = pulumi.Config('powerdns')
 
 class _ExportableConfig(types.ModuleType):
     @property
-    def api_endpoint(self) -> Optional[str]:
-        """
-        The api endpoint of the powerdns server
-        """
-        return __config__.get('apiEndpoint')
-
-    @property
-    def api_key(self) -> Optional[str]:
-        """
-        The access key for API operations
-        """
-        return __config__.get('apiKey')
-
-    @property
     def insecure(self) -> Optional[bool]:
         """
         Explicitly allow the provider to perform "insecure" SSL requests. If omitted, default value is "false"
@@ -37,8 +23,22 @@ class _ExportableConfig(types.ModuleType):
         return __config__.get_bool('insecure')
 
     @property
+    def key(self) -> str:
+        """
+        The access key for API operations
+        """
+        return __config__.get('key') or (_utilities.get_env('POWERDNS_KEY') or '')
+
+    @property
     def logging(self) -> Optional[bool]:
         return __config__.get_bool('logging')
+
+    @property
+    def url(self) -> str:
+        """
+        The api endpoint of the powerdns server
+        """
+        return __config__.get('url') or (_utilities.get_env('POWERDNS_URL') or '')
 
     @property
     def version(self) -> Optional[str]:

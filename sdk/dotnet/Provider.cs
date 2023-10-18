@@ -13,16 +13,16 @@ namespace Pulumi.Powerdns
     public partial class Provider : global::Pulumi.ProviderResource
     {
         /// <summary>
-        /// The api endpoint of the powerdns server
-        /// </summary>
-        [Output("apiEndpoint")]
-        public Output<string> ApiEndpoint { get; private set; } = null!;
-
-        /// <summary>
         /// The access key for API operations
         /// </summary>
-        [Output("apiKey")]
-        public Output<string> ApiKey { get; private set; } = null!;
+        [Output("key")]
+        public Output<string> Key { get; private set; } = null!;
+
+        /// <summary>
+        /// The api endpoint of the powerdns server
+        /// </summary>
+        [Output("url")]
+        public Output<string> Url { get; private set; } = null!;
 
         [Output("version")]
         public Output<string> Version { get; private set; } = null!;
@@ -48,7 +48,7 @@ namespace Pulumi.Powerdns
                 PluginDownloadURL = "github://api.github.com/nextpart/pulumi-powerdns-native",
                 AdditionalSecretOutputs =
                 {
-                    "apiKey",
+                    "key",
                 },
             };
             var merged = CustomResourceOptions.Merge(defaultOptions, options);
@@ -61,41 +61,43 @@ namespace Pulumi.Powerdns
     public sealed class ProviderArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// The api endpoint of the powerdns server
-        /// </summary>
-        [Input("apiEndpoint", required: true)]
-        public Input<string> ApiEndpoint { get; set; } = null!;
-
-        [Input("apiKey", required: true)]
-        private Input<string>? _apiKey;
-
-        /// <summary>
-        /// The access key for API operations
-        /// </summary>
-        public Input<string>? ApiKey
-        {
-            get => _apiKey;
-            set
-            {
-                var emptySecret = Output.CreateSecret(0);
-                _apiKey = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
-            }
-        }
-
-        /// <summary>
         /// Explicitly allow the provider to perform "insecure" SSL requests. If omitted, default value is "false"
         /// </summary>
         [Input("insecure", json: true)]
         public Input<bool>? Insecure { get; set; }
 
+        [Input("key", required: true)]
+        private Input<string>? _key;
+
+        /// <summary>
+        /// The access key for API operations
+        /// </summary>
+        public Input<string>? Key
+        {
+            get => _key;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _key = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
+
         [Input("logging", json: true)]
         public Input<bool>? Logging { get; set; }
+
+        /// <summary>
+        /// The api endpoint of the powerdns server
+        /// </summary>
+        [Input("url", required: true)]
+        public Input<string> Url { get; set; } = null!;
 
         [Input("version", required: true)]
         public Input<string> Version { get; set; } = null!;
 
         public ProviderArgs()
         {
+            Key = Utilities.GetEnv("POWERDNS_KEY") ?? "";
+            Url = Utilities.GetEnv("POWERDNS_URL") ?? "";
         }
         public static new ProviderArgs Empty => new ProviderArgs();
     }

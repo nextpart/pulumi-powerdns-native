@@ -16,10 +16,10 @@ import (
 type Provider struct {
 	pulumi.ProviderResourceState
 
-	// The api endpoint of the powerdns server
-	ApiEndpoint pulumi.StringOutput `pulumi:"apiEndpoint"`
 	// The access key for API operations
-	ApiKey  pulumi.StringOutput `pulumi:"apiKey"`
+	Key pulumi.StringOutput `pulumi:"key"`
+	// The api endpoint of the powerdns server
+	Url     pulumi.StringOutput `pulumi:"url"`
 	Version pulumi.StringOutput `pulumi:"version"`
 }
 
@@ -30,20 +30,24 @@ func NewProvider(ctx *pulumi.Context,
 		return nil, errors.New("missing one or more required arguments")
 	}
 
-	if args.ApiEndpoint == nil {
-		return nil, errors.New("invalid value for required argument 'ApiEndpoint'")
-	}
-	if args.ApiKey == nil {
-		return nil, errors.New("invalid value for required argument 'ApiKey'")
-	}
 	if args.Version == nil {
 		return nil, errors.New("invalid value for required argument 'Version'")
 	}
-	if args.ApiKey != nil {
-		args.ApiKey = pulumi.ToSecret(args.ApiKey).(pulumi.StringInput)
+	if args.Key == nil {
+		if d := internal.GetEnvOrDefault("", nil, "POWERDNS_KEY"); d != nil {
+			args.Key = pulumi.String(d.(string))
+		}
+	}
+	if args.Url == nil {
+		if d := internal.GetEnvOrDefault("", nil, "POWERDNS_URL"); d != nil {
+			args.Url = pulumi.String(d.(string))
+		}
+	}
+	if args.Key != nil {
+		args.Key = pulumi.ToSecret(args.Key).(pulumi.StringInput)
 	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
-		"apiKey",
+		"key",
 	})
 	opts = append(opts, secrets)
 	opts = internal.PkgResourceDefaultOpts(opts)
@@ -56,26 +60,26 @@ func NewProvider(ctx *pulumi.Context,
 }
 
 type providerArgs struct {
-	// The api endpoint of the powerdns server
-	ApiEndpoint string `pulumi:"apiEndpoint"`
-	// The access key for API operations
-	ApiKey string `pulumi:"apiKey"`
 	// Explicitly allow the provider to perform "insecure" SSL requests. If omitted, default value is "false"
-	Insecure *bool  `pulumi:"insecure"`
-	Logging  *bool  `pulumi:"logging"`
-	Version  string `pulumi:"version"`
+	Insecure *bool `pulumi:"insecure"`
+	// The access key for API operations
+	Key     string `pulumi:"key"`
+	Logging *bool  `pulumi:"logging"`
+	// The api endpoint of the powerdns server
+	Url     string `pulumi:"url"`
+	Version string `pulumi:"version"`
 }
 
 // The set of arguments for constructing a Provider resource.
 type ProviderArgs struct {
-	// The api endpoint of the powerdns server
-	ApiEndpoint pulumi.StringInput
-	// The access key for API operations
-	ApiKey pulumi.StringInput
 	// Explicitly allow the provider to perform "insecure" SSL requests. If omitted, default value is "false"
 	Insecure pulumi.BoolPtrInput
-	Logging  pulumi.BoolPtrInput
-	Version  pulumi.StringInput
+	// The access key for API operations
+	Key     pulumi.StringInput
+	Logging pulumi.BoolPtrInput
+	// The api endpoint of the powerdns server
+	Url     pulumi.StringInput
+	Version pulumi.StringInput
 }
 
 func (ProviderArgs) ElementType() reflect.Type {
@@ -127,14 +131,14 @@ func (o ProviderOutput) ToOutput(ctx context.Context) pulumix.Output[*Provider] 
 	}
 }
 
-// The api endpoint of the powerdns server
-func (o ProviderOutput) ApiEndpoint() pulumi.StringOutput {
-	return o.ApplyT(func(v *Provider) pulumi.StringOutput { return v.ApiEndpoint }).(pulumi.StringOutput)
+// The access key for API operations
+func (o ProviderOutput) Key() pulumi.StringOutput {
+	return o.ApplyT(func(v *Provider) pulumi.StringOutput { return v.Key }).(pulumi.StringOutput)
 }
 
-// The access key for API operations
-func (o ProviderOutput) ApiKey() pulumi.StringOutput {
-	return o.ApplyT(func(v *Provider) pulumi.StringOutput { return v.ApiKey }).(pulumi.StringOutput)
+// The api endpoint of the powerdns server
+func (o ProviderOutput) Url() pulumi.StringOutput {
+	return o.ApplyT(func(v *Provider) pulumi.StringOutput { return v.Url }).(pulumi.StringOutput)
 }
 
 func (o ProviderOutput) Version() pulumi.StringOutput {
