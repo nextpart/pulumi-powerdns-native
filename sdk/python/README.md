@@ -43,7 +43,7 @@ go get github.com/nextpart/pulumi-powerdns-native/sdk/go/...
 To use from .NET, install using `dotnet add package`:
 
 ```bash
-dotnet add package Pulumi.Aci
+dotnet add package Pulumi.Powerdns
 ```
 
 ## Example

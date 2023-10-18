@@ -43,7 +43,7 @@ go get github.com/nextpart/pulumi-powerdns-native/sdk/go/...
 To use from .NET, install using `dotnet add package`:
 
 ```bash
-dotnet add package Pulumi.Aci
+dotnet add package Pulumi.Powerdns
 ```
 
 ## Example
@@ -120,15 +120,34 @@ func main() {
 ### .NET
 
 ```csharp
+using System.Collections.Generic;
 using Pulumi;
 using Pulumi.Powerdns;
 
-class Powerdns : Stack
+return await Deployment.RunAsync(() =>
 {
-    public Powerdns()
-    {
-    }
-}
+   // Add your resources here
+   // e.g. var resource = new Resource("name", new ResourceArgs { });
+   var zone = new Zone("foobar", new ZoneArgs {
+      Name = "foobar.com.",
+      Kind = "master",
+      Account = "admin",
+   });
+
+   var record = new Record("record", new RecordArgs {
+      Name = "test.foobar.com.",
+      Zone = zone.Name,
+      Type = "A",
+      Records = new List<string>(){"10.0.0.0", "10.0.0.2"},
+      Ttl = 300,
+   });
+
+   // Export outputs here
+   return new Dictionary<string, object?>
+   {
+      ["outputKey"] = "outputValue"
+   };
+});
 ```
 
 ### Configuration
