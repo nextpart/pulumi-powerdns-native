@@ -48,6 +48,8 @@ func Provider() p.Provider {
 			DisplayName: "PowerDNS",
 			Description: "The Pulumi PowerDNS provider provides resources to interact with a PowerDNS Authoritative DNS Server.",
 			Keywords: []string{
+				"category/infrastructure",
+				"kind/native",
 				"pulumi",
 				"powerdns",
 				"dns",
@@ -56,7 +58,7 @@ func Provider() p.Provider {
 			License:           "MPL-2.0",
 			Repository:        "https://github.com/nextpart/pulumi-powerdns-native",
 			PluginDownloadURL: "github://api.github.com/nextpart/pulumi-powerdns-native",
-			Publisher:         "Nextpart",
+			Publisher:         "NEXTPART Security Intelligence GmbH",
 			LogoURL:           "https://raw.githubusercontent.com/nextpart/pulumi-powerdns-native/master/assets/logo.png",
 			// This contains language specific details for generating the provider's SDKs
 			LanguageMap: map[string]any{
