@@ -43,6 +43,8 @@
     "displayName": "PowerDNS",
     "homepage": "https://pulumi.com",
     "keywords": [
+        "category/infrastructure",
+        "kind/native",
         "pulumi",
         "powerdns",
         "dns"
@@ -160,7 +162,7 @@
             "key"
         ]
     },
-    "publisher": "Nextpart",
+    "publisher": "NEXTPART Security Intelligence GmbH",
     "repository": "https://github.com/nextpart/pulumi-powerdns-native",
     "resources": {
         "powerdns:index:Record": {
