@@ -71,12 +71,12 @@ const record2 = new powerdns.Record("foo", {
 import pulumi
 import pulumi_powerdns as pdns
 
-test = pdns.Zone("test", name="fifo.com.", kind="master", account="admin")
+test = pdns.Zone("test", name="foobar.com.", kind="master", account="admin")
 
 record = pdns.Record(
     "record",
-    zone="fifo.com.",
-    name="test.fifo.com.",
+    zone="foobar.com.",
+    name="test.foobar.com.",
     type="A",
     records=["10.0.0.0", "10.0.0.1"],
     ttl=300,
