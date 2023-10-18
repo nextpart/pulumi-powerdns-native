@@ -1,7 +1,7 @@
 {
     "config": {
         "defaults": [
-            "",
+            "version",
             "url",
             "key"
         ],
@@ -34,7 +34,7 @@
                 "description": "The api endpoint of the powerdns server",
                 "type": "string"
             },
-            "": {
+            "version": {
                 "type": "string"
             }
         }
@@ -64,7 +64,7 @@
                 "com.google.code.gson:gson": "2.8.9",
                 "com.pulumi:pulumi": "0.6.0"
             },
-            "gradleNexusPublishPlugin": "1.1.0"
+            "gradleNexusPublishPluginVersion": "1.1.0"
         },
         "nodejs": {
             "dependencies": {
@@ -112,7 +112,7 @@
                 "description": "The api endpoint of the powerdns server",
                 "type": "string"
             },
-            "": {
+            "version": {
                 "type": "string"
             }
         },
@@ -145,17 +145,17 @@
                 "description": "The api endpoint of the powerdns server",
                 "type": "string"
             },
-            "": {
+            "version": {
                 "type": "string"
             }
         },
         "required": [
-            "",
+            "version",
             "url",
             "key"
         ],
         "requiredInputs": [
-            "",
+            "version",
             "url",
             "key"
         ]
