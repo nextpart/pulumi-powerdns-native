@@ -2,8 +2,6 @@
 
 This repository is a contains a pulumi native provider for the PowerDNS Authoritative Nameserver. This allow the creation of zones and records.
 
-> **NOTE:** This provider is experimental. Not save for production use.
-
 ## Installing
 
 This package is available for several languages/platforms:

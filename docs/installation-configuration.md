@@ -21,9 +21,9 @@ To provision resources with the Pulumi PowerDNS provider, you need to have corre
 
 Use `pulumi config set powerdns:<option> (--secret)`.
 
-| Option | Environment Variable | Required/Optional | Description |
-|-----|------|------|----|
-| `url` | `POWERDNS_URL` | Required | URL of the PowerDNS Authoritative Server api endpoint  |
-| `key`| `POWERDNS_KEY` | Required (Secret) | Api key for the PowerDNS Authoritative Server |
-| `insecure` | `POWERDNS_INSECURE` | Optional | Allow insecure HTTPS client |
-| `logging` | `POWERDNS_LOGGING` | Optional | Enable debug logging |
+| Option     | Environment Variable | Required/Optional | Description                                           |
+|------------|----------------------|-------------------|-------------------------------------------------------|
+| `url`      | `POWERDNS_URL`       | Required          | URL of the PowerDNS Authoritative Server api endpoint |
+| `key`      | `POWERDNS_KEY`       | Required (Secret) | Api key for the PowerDNS Authoritative Server         |
+| `insecure` | `POWERDNS_INSECURE`  | Optional          | Allow insecure HTTPS client                           |
+| `logging`  | `POWERDNS_LOGGING`   | Optional          | Enable debug logging                                  |
